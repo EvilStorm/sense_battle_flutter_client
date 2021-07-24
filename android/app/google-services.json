@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "499429497124",
+    "project_id": "sensebattle-28553",
+    "storage_bucket": "sensebattle-28553.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499429497124:android:4603e1409e5019c74e3bb1",
+        "android_client_info": {
+          "package_name": "com.hj.sense_battle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499429497124-v2kmb7hmfm2u52ddsmgp7vde0g49b3u6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hj.sense_battle",
+            "certificate_hash": "ee1ff9c4005255f9bdcf792ae57f473ee69f8eb1"
+          }
+        },
+        {
+          "client_id": "499429497124-riu5vtudioj7u7d8kvlgeqpk6c4bcb1h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlVLX9EUl1V6XkoZQ8Cvxr5urGlkdegLk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499429497124-riu5vtudioj7u7d8kvlgeqpk6c4bcb1h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "499429497124-u0uj1aredf21hingisop1vt0gcdgpbhi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hj.senseBattle"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
