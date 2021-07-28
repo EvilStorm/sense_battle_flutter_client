@@ -4,27 +4,29 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/providers/provider_signin.dart';
 
-class SignInWithEmail extends StatelessWidget {
+class AddAccountWithEmail extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordCheckController = TextEditingController();
   late SignInProvider signInProvider;
 
-  SignInWithEmail({
+  AddAccountWithEmail({
     Key? key,
   }) : super(key: key);
 
-  bool checkInputVaildation() {
-    if (emailController.text.length < 5 || !EmailValidator.validate(emailController.text)) {
+  void checkInputVaildation() {
+    if (emailController.text == null || EmailValidator.validate(emailController.text)) {
       signInProvider.setErrorMessage('이메일을 확인해주세요.');
-      return false;
+      return;
     }
 
     if (passwordController.text == null) {
       signInProvider.setErrorMessage('비밀번호를 확인해주세요.');
-      return false;
+      return;
     }
     
-    return true;
+    
+
   }
 
   @override
@@ -58,13 +60,23 @@ class SignInWithEmail extends StatelessWidget {
         SizedBox(
           height: 16.0,
         ),
+        TextField(
+          controller: passwordCheckController,
+          obscureText: true,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: '비밀번호확인',
+          ),
+        ),
+        SizedBox(
+          height: 16.0,
+        ),
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
             onPressed: () {
-              if(checkInputVaildation()) {
-                signInProvider.signinWithEmail(emailController.text, passwordController.text);
-              }
+              signInProvider.signinWithEmail(
+                  emailController.text, passwordController.text);
             },
             child: Text(
               '회원가입',
