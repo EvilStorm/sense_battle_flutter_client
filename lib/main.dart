@@ -6,6 +6,7 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/color_store.dart';
 import 'package:sense_battle/providers/provider_signin.dart';
+import 'package:sense_battle/screens/main/main_screen.dart';
 import 'package:sense_battle/screens/sign_in/sign_in_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides{
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         textStyle: TextStyle(
           color: const Color(0xFF31112C),
-          fontSize: 20.0, 
+          fontSize: 22.0, 
           fontWeight: FontWeight.w700,
         ),
         onPrimary: Colors.black87,
@@ -109,6 +110,11 @@ class MyApp extends StatelessWidget {
   );
   ThemeData usedTheme = darkTheme;
 
+  var routerPages = [
+    GetPage(name: '/main', page: () => MainScreen())
+  ];
+
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -124,6 +130,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: usedTheme,
               home: SignInScreen(),
+              getPages: routerPages,
             ),
           );
         }
