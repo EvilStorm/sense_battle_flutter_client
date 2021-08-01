@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/color_store.dart';
 import 'package:sense_battle/providers/provider_signin.dart';
 import 'package:sense_battle/screens/main/main_screen.dart';
-import 'package:sense_battle/screens/sign_in/sign_in_screen.dart';
+import 'package:sense_battle/screens/sign_in/screen_sign_in.dart';
+import 'package:sense_battle/screens/splash/screen_splash.dart';
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -111,6 +112,8 @@ class MyApp extends StatelessWidget {
   ThemeData usedTheme = darkTheme;
 
   var routerPages = [
+    GetPage(name: '/splash', page: () => SplashScreen()),
+    GetPage(name: '/signin', page: () => SignInScreen()),
     GetPage(name: '/main', page: () => MainScreen())
   ];
 

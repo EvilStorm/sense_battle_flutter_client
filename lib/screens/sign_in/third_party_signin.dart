@@ -1,8 +1,13 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import 'package:sense_battle/providers/provider_signin.dart';
 import 'package:sense_battle/screens/sign_in/thrid_party_signin_button.dart';
+import 'package:sense_battle/utils/Print.dart';
 
-class ThirdPartySignInSection extends StatelessWidget {
+class ThirdPartySignInSection extends StatefulWidget {
   final double? height;
   const ThirdPartySignInSection({
     Key? key,
@@ -10,9 +15,30 @@ class ThirdPartySignInSection extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _ThirdPartySignInSectionState createState() => _ThirdPartySignInSectionState();
+}
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  scopes: <String>[
+    'email'
+  ]
+);
+
+class _ThirdPartySignInSectionState extends State<ThirdPartySignInSection> {
+  
+  late SignInProvider signInProvider;
+  
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    signInProvider = Provider.of<SignInProvider>(context);
+   
     return Container(
-      height: height,
+      height: widget.height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -24,7 +50,7 @@ class ThirdPartySignInSection extends StatelessWidget {
             backgroundColor: Colors.white,
             textColor: Color(0xFF383838),
             callback: () {
-              
+              signInProvider.byGoogle();
             } 
           ),
           ThridPartySignInButton(
@@ -34,7 +60,7 @@ class ThirdPartySignInSection extends StatelessWidget {
             backgroundColor: Color(0xFF4267B2),
             title: "Sign in with Facebook",
             callback: () {
-              
+              signInProvider.byFacebook();              
             }
           ),
           ThridPartySignInButton(

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SenseBattle</string>
+
+    <string name="facebook_app_id">805721600097960</string> 
+    <string name="fb_login_protocol_scheme">fb805721600097960</string>
+</resources>

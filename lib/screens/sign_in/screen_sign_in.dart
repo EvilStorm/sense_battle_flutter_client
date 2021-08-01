@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/constants.dart';
@@ -22,30 +23,18 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   late SignInProvider signInProvider;
-  
+
   @override
   void initState() {
-    FirebaseAuth.instance.authStateChanges().listen((event) { 
-      Print.e("Auth.... $event");
-    });
-    FirebaseAuth.instance.idTokenChanges().listen((event) { 
-      Print.e("TOKEN.... $event");
-
-    });
-
-    FirebaseAuth.instance.userChanges().listen((event) { 
-      Print.e("userChanges.... $event");
-    });
-
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
     signInProvider = Provider.of<SignInProvider>(context);
     
-    Print.e("signInProvider.errorMessage : ${signInProvider.fetchState }", );
+
+    Print.e("_userCredential: ${signInProvider.userCredential}");
 
     if (signInProvider.errorMessage != null) {
       WidgetsBinding.instance?.addPostFrameCallback((_) {

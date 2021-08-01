@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sense_battle/models/password_level_model.dart';
 import 'package:sense_battle/providers/fetch_state.dart';
 import 'package:sense_battle/utils/Print.dart';
@@ -40,7 +42,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       }
     } catch (e) {
       Print.e(e);
-      _errMsg = e.toString();
+      // _errMsg = e.toString();
     } finally {
       _fetchState = FetchState.IDEL;
       notifyListeners();
@@ -64,12 +66,47 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       }
     } catch (e) {
       Print.e(e);
-      _errMsg = e.toString();
+      // _errMsg = e.toString();
     } finally {
       _fetchState = FetchState.IDEL;
       notifyListeners();
     }
   }
 
+  void byGoogle() async {
+    try {
+      final GoogleSignInAccount? googleAccount = await GoogleSignIn().signIn();
 
+      if( googleAccount != null) {
+        final GoogleSignInAuthentication googleAuth = await googleAccount.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken
+        );
+
+        _userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      }
+    } catch (e) {
+      Print.e(e);
+      // _errMsg = e.toString();
+    }finally {
+      notifyListeners();
+    }
+  }
+
+  void byFacebook() async {
+    try {
+      
+      final LoginResult result = await FacebookAuth.instance.login();
+      final facebookAuthCredential = FacebookAuthProvider.credential(result.accessToken!.token);
+
+      _userCredential = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    } catch (e) {
+      Print.e(e);
+      // _errMsg = e.toString();
+    }finally {
+      notifyListeners();
+    }
+  }
+  
 }
