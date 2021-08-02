@@ -6,6 +6,7 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/color_store.dart';
 import 'package:sense_battle/providers/provider_signin.dart';
+import 'package:sense_battle/screens/email_validation/email_validation_screen.dart';
 import 'package:sense_battle/screens/main/main_screen.dart';
 import 'package:sense_battle/screens/sign_in/screen_sign_in.dart';
 import 'package:sense_battle/screens/splash/screen_splash.dart';
@@ -114,7 +115,8 @@ class MyApp extends StatelessWidget {
   var routerPages = [
     GetPage(name: '/splash', page: () => SplashScreen()),
     GetPage(name: '/signin', page: () => SignInScreen()),
-    GetPage(name: '/main', page: () => MainScreen())
+    GetPage(name: '/emailVaildation', page: () => EmailValidationScreen()),
+    GetPage(name: '/main', page: () => MainScreen()),
   ];
 
 

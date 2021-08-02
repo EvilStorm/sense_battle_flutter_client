@@ -109,4 +109,9 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
   
+  void signInOut() async {
+    await FirebaseAuth.instance.signOut();
+    _userCredential = null;
+    notifyListeners();
+  }
 }

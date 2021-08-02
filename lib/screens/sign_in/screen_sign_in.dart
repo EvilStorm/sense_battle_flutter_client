@@ -7,6 +7,8 @@ import 'package:sense_battle/constants/constants.dart';
 import 'package:sense_battle/providers/fetch_state.dart';
 
 import 'package:sense_battle/providers/provider_signin.dart';
+import 'package:sense_battle/screens/email_validation/email_validation_screen.dart';
+import 'package:sense_battle/screens/main/main_screen.dart';
 import 'package:sense_battle/screens/sign_in/add_account_email.dart';
 import 'package:sense_battle/screens/sign_in/sense_battle_signin_button.dart';
 import 'package:sense_battle/screens/sign_in/third_party_signin.dart';
@@ -52,7 +54,11 @@ class _SignInScreenState extends State<SignInScreen> {
 
     if(signInProvider.userCredential != null) {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
-        Get.toNamed('/main');
+        if (signInProvider.userCredential!.user?.emailVerified == false) {
+          Get.off(() => EmailValidationScreen());
+        } else {
+          Get.off(() => MainScreen());
+        }
       });
     }
 
@@ -134,5 +140,3 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 }
-
-

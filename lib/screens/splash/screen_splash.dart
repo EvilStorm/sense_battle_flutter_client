@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sense_battle/screens/email_validation/email_validation_screen.dart';
 import 'package:sense_battle/screens/main/main_screen.dart';
 import 'package:sense_battle/screens/sign_in/screen_sign_in.dart';
 import 'package:sense_battle/utils/Print.dart';
@@ -16,16 +17,24 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+
     
+    super.initState();
+    switchPage();
+  }
+
+  void switchPage() async {
+    await FirebaseAuth.instance.signOut();
+
     FirebaseAuth.instance.authStateChanges().listen((event) { 
       if(event == null) {
         Get.off(() => SignInScreen());
+      }else if (event.emailVerified == false) {
+        Get.off(() => EmailValidationScreen());
       } else {
         Get.off(() => MainScreen());
       }
     });
-    
-    super.initState();
   }
 
   @override
