@@ -1,8 +1,10 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:sense_battle/constants/constants.dart';
 import 'package:sense_battle/providers/provider_signin.dart';
 
 class SignInWithEmail extends StatelessWidget {
@@ -17,17 +19,26 @@ class SignInWithEmail extends StatelessWidget {
   }) : super(key: key);
 
   bool checkInputVaildation() {
-    if (emailController.text == "" || !EmailValidator.validate(emailController.text)) {
+    if (!isCanUseEmail()) {
       signInProvider.setErrorMessage('이메일을 확인해주세요.');
       return false;
     }
+    return true;
+  }
 
-    if (passwordController.text == "" || !isPasswodVaildate()) {
-      signInProvider.setErrorMessage('비밀번호를 확인해주세요.');
+  bool isCanUseEmail() {
+    if (emailController.text == "" || !EmailValidator.validate(emailController.text)) {
       return false;
     }
-    
     return true;
+  }
+
+  void passwordReset() {
+    if (!isCanUseEmail()) {
+      signInProvider.setErrorMessage('이메일을 입력해주세요.');
+      return;
+    }
+    FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
   }
 
   @override
@@ -54,6 +65,16 @@ class SignInWithEmail extends StatelessWidget {
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             labelText: '비밀번호',
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            onPressed: () => passwordReset(),
+            child: Text(
+              '비밀번호 초기화',
+              style: Theme.of(context).textTheme.bodyText2?.apply(color: Theme.of(context).accentColor),
+            ),
           ),
         ),
         Spacer(flex: 2,),

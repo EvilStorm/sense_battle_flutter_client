@@ -13,11 +13,19 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-
     SignInProvider signInProvider = Provider.of<SignInProvider>(context);
-    Print.e("EMAIL vaildation: ${signInProvider.userCredential?.user?.emailVerified}");
-    return Container(
-      child: Text('Main!!!'),
+
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: Theme.of(context).backgroundColor,
+          child: Text(
+            signInProvider.userCredential?.user?.uid??"haha"
+          )
+        ),
+      ),
     );
   }
 }
