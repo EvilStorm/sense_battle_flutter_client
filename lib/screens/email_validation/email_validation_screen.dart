@@ -20,6 +20,7 @@ class EmailValidationScreen extends StatefulWidget {
 class _EmailValidationScreenState extends State<EmailValidationScreen> {
   
   late SignInProvider signInProvider;
+  bool isDispose = false;
 
   @override
   void initState() {
@@ -47,22 +48,31 @@ class _EmailValidationScreenState extends State<EmailValidationScreen> {
   }
 
   void startValifyListener() async {
-    Timer.periodic(Duration(seconds: 1), (timer) async { 
+    Timer.periodic(Duration(seconds: 5), (timer) async { 
       
-      if(signInProvider.userCredential?.user?.emailVerified == true) {
+      if(
+        signInProvider.userCredential?.user?.emailVerified == true
+        || isDispose 
+
+      ) {
         timer.cancel();
       }
 
       await signInProvider.userCredential?.user?.reload();
 
     });
+  }
 
+  @override
+  void dispose() {
+    isDispose = true;
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
 
-    SignInProvider signInProvider = Provider.of<SignInProvider>(context);
+    signInProvider = Provider.of<SignInProvider>(context);
 
     return Container(
       child: Center(
@@ -73,7 +83,7 @@ class _EmailValidationScreenState extends State<EmailValidationScreen> {
               '이메일 인증후 사용 할 수 있습니다.',
               style: Theme.of(context).textTheme.subtitle1,
             ),
-            SizedBox(height: Constants.sapceGap,),
+            SizedBox(height: Constants.sapceGap*2,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

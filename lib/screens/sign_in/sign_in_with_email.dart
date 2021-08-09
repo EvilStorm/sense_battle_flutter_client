@@ -11,7 +11,7 @@ class SignInWithEmail extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   late SignInProvider signInProvider;
-  
+
  bool isPasswodVaildate() => passwordController.text.length >= 8;
 
   SignInWithEmail({
@@ -39,6 +39,12 @@ class SignInWithEmail extends StatelessWidget {
       return;
     }
     FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
+    Get.rawSnackbar(
+          message: '비밀번호 초기화 링크가 이메일로 전송되었습니다.\n이메일을 확인해주세요.', 
+          snackPosition: SnackPosition.TOP,
+          borderRadius: Constants.sapceGap,
+          duration: Duration(seconds: 2),
+        );
   }
 
   @override

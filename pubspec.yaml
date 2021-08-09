@@ -37,7 +37,9 @@ dependencies:
   flutter_svg: ^0.22.0
   google_sign_in: ^5.0.5
   flutter_facebook_auth: ^3.5.0
-  
+  dio: ^4.0.0
+  hive: ^2.0.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

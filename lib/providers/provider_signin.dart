@@ -12,6 +12,8 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
   PasswordLevelModel _passwordVaildationMessage = PasswordLevelModel();
   UserCredential? _userCredential;
 
+
+
   String? get errorMessage => _errMsg;
   PasswordLevelModel get passwordVaildationMessage => _passwordVaildationMessage;
   UserCredential? get userCredential => _userCredential;
@@ -31,7 +33,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       _userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
-      Print.i(_userCredential.toString());
+      Print.i("signinWithEmail: ${_userCredential.toString()}" );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Print.i('사용자가 없습니다.');
@@ -39,6 +41,9 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       } else if (e.code == 'wrong-password') {
         Print.i('비밀번호가 틀렸습니다.');
         _errMsg = "비밀번호가 틀렸습니다.";
+      } else {
+        Print.i('What?? ${e.code}');
+        _errMsg = "로그인에 실패했습니다.";
       }
     } catch (e) {
       Print.e(e);
@@ -60,10 +65,15 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       if (e.code == 'weak-password') {
         Print.i('password too weak');
         _errMsg = "비밀번호가 너무 쉽습니다.";
-      } else if (e.code == 'email-aleady-in-use') {
+        
+      } else if (e.code == 'email-already-in-use') {
         Print.i('The account already exists for that email.');
         _errMsg = "사용중인 이메일 입니다.";
+      } else {
+        Print.i('What?? ${e.code}');
+        _errMsg = "회원가입에 실패했습니다.";
       }
+
     } catch (e) {
       Print.e(e);
       // _errMsg = e.toString();
@@ -73,6 +83,10 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
+  void getUserInfo() async {
+    
+
+  }
   void byGoogle() async {
     try {
       final GoogleSignInAccount? googleAccount = await GoogleSignIn().signIn();

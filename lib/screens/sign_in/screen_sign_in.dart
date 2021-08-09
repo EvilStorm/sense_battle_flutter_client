@@ -47,7 +47,7 @@ class _SignInScreenState extends State<SignInScreen> {
           snackPosition: SnackPosition.TOP,
           backgroundColor: Theme.of(context).errorColor,
           borderRadius: Constants.sapceGap,
-          duration: Duration(seconds: 1),
+          duration: Duration(seconds: 2),
         );
         signInProvider.setErrorMessage(null);
         }
