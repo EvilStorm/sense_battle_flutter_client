@@ -12,6 +12,7 @@ import 'package:sense_battle/screens/main/main_screen.dart';
 import 'package:sense_battle/screens/sign_in/add_account_email.dart';
 import 'package:sense_battle/screens/sign_in/sense_battle_signin_button.dart';
 import 'package:sense_battle/screens/sign_in/third_party_signin.dart';
+import 'package:sense_battle/screens/widgets/bottom_show_keyboard_wrapper.dart';
 import 'package:sense_battle/screens/widgets/circular_progress.dart';
 import 'package:sense_battle/utils/Print.dart';
 
@@ -38,6 +39,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
     Print.e("_userCredential: ${signInProvider.userCredential}");
 
+    Print.w(" MediaQuery.of(context).viewInsets.bottom: ${MediaQuery.of(context).viewInsets.bottom}" );
     if (signInProvider.errorMessage != null) {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         Get.rawSnackbar(
@@ -63,6 +65,7 @@ class _SignInScreenState extends State<SignInScreen> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: true, 
       body: SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -102,18 +105,13 @@ class _SignInScreenState extends State<SignInScreen> {
                           TextButton(
                             onPressed: (){
                               showModalBottomSheet(
+                                isScrollControlled: true,
                                 context: context, 
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(Constants.sapceGap),
                                 ),
                                 backgroundColor: Theme.of(context).dialogBackgroundColor,
-                                builder: (context) => SizedBox(
-                                  height: 480.0,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(Constants.sapceGap),
-                                    child: AddAccountWithEmail(),
-                                  )
-                                )
+                                builder: (context) => BottomKeyboardShowWrapper( height: 480.0, widget: AddAccountWithEmail())
                               );
                             },
                             child: Text(

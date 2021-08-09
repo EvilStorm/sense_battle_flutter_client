@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sense_battle/constants/constants.dart';
 import 'package:sense_battle/screens/sign_in/sign_in_with_email.dart';
+import 'package:sense_battle/screens/widgets/bottom_show_keyboard_wrapper.dart';
 
 class SenseBattleSignInButton extends StatelessWidget {
   
@@ -15,17 +16,12 @@ class SenseBattleSignInButton extends StatelessWidget {
         onTap: (){
           showModalBottomSheet(
             context: context, 
+            isScrollControlled: true,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(Constants.sapceGap),
             ),
             backgroundColor: Theme.of(context).dialogBackgroundColor,
-            builder: (context) => SizedBox(
-              height: 320.0,
-              child: Padding(
-                padding: const EdgeInsets.all(Constants.sapceGap),
-                child: SignInWithEmail(),
-              )
-            )
+            builder: (context) => BottomKeyboardShowWrapper(height: 320.0, widget: SignInWithEmail())              
           );
         },
         child: Container(

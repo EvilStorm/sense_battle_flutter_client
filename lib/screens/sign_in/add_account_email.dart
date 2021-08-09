@@ -65,6 +65,7 @@ class _AddAccountWithEmailState extends State<AddAccountWithEmail> {
     signInProvider = Provider.of<SignInProvider>(context);
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Spacer(flex: 1,),
         TextField(
