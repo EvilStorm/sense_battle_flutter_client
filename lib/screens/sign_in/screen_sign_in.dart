@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk/user.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/constants.dart';
 import 'package:sense_battle/providers/fetch_state.dart';
@@ -29,6 +30,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   void initState() {
+    UserApi.instance.logout();
     super.initState();
   }
 
@@ -36,7 +38,6 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     signInProvider = Provider.of<SignInProvider>(context);
     
-
     Print.e("_userCredential: ${signInProvider.userCredential}");
 
     Print.w(" MediaQuery.of(context).viewInsets.bottom: ${MediaQuery.of(context).viewInsets.bottom}" );
@@ -56,7 +57,10 @@ class _SignInScreenState extends State<SignInScreen> {
 
     if(signInProvider.userCredential != null) {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
-        if (signInProvider.userCredential!.user?.emailVerified == false) {
+        if (
+          signInProvider.userCredential!.user?.emailVerified == false 
+          && signInProvider.userCredential?.additionalUserInfo?.providerId == "password"
+        ) {
           Get.off(() => EmailValidationScreen());
         } else {
           Get.off(() => MainScreen());

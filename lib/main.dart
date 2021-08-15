@@ -134,7 +134,7 @@ class MyApp extends StatelessWidget {
               title: 'Sense Battle',
               debugShowCheckedModeBanner: false,
               theme: usedTheme,
-              home: SignInScreen(),
+              home: SplashScreen(),
               getPages: routerPages,
             ),
           );

@@ -69,7 +69,7 @@ class _ThirdPartySignInSectionState extends State<ThirdPartySignInSection> {
             title: "Sign in with KakaoTalk",
             backgroundColor: Color(0xFFFF812),
             callback: () {
-              
+              signInProvider.byKakaoTalk(); 
             } 
           ),
           ThridPartySignInButton(

@@ -18,8 +18,58 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.499429497124-u0uj1aredf21hingisop1vt0gcdgpbhi</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb805721600097960</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakao</string>
+				<string>490012993a5dd6ab20a19577f3410775</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FacebookAppID</key>
+	<string>805721600097960</string>
+	<key>FacebookClientToken</key>
+	<string>ebbe4a73cb64d9cf8c3dacf3ae33b64a</string>
+	<key>FacebookDisplayName</key>
+	<string>SenseBattle</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fbapi20130214</string>
+		<string>fbapi20130410</string>
+		<string>fbapi20130702</string>
+		<string>fbapi20131010</string>
+		<string>fbapi20131219</string>
+		<string>fbapi20140410</string>
+		<string>fbapi20140116</string>
+		<string>fbapi20150313</string>
+		<string>fbapi20150629</string>
+		<string>fbapi20160328</string>
+		<string>fbauth</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -39,50 +89,23 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>KAKAO_APP_KEY</key>
+	<string>490012993a5dd6ab20a19577f3410775</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CFBundleURLTypes</key>
-	<array>
-	    <dict>
-	        <key>CFBundleTypeRole</key>
-	        <string>Editor</string>
-	        <key>CFBundleURLSchemes</key>
-	        <array>
-	        <string>com.googleusercontent.apps.499429497124-u0uj1aredf21hingisop1vt0gcdgpbhi</string>
-	        </array>
-	    </dict>
-        <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>fb805721600097960</string>
-        </array>
-        </dict>
-	</array>
-    
-    <key>FacebookAppID</key>
-    <string>805721600097960</string>
-    <key>FacebookClientToken</key>
-    <string>ebbe4a73cb64d9cf8c3dacf3ae33b64a</string>
-    <key>FacebookDisplayName</key>
-    <string>SenseBattle</string>
     <key>LSApplicationQueriesSchemes</key>
-    <array>
-      <string>fbapi</string>
-      <string>fbapi20130214</string>
-      <string>fbapi20130410</string>
-      <string>fbapi20130702</string>
-      <string>fbapi20131010</string>
-      <string>fbapi20131219</string>
-      <string>fbapi20140410</string>
-      <string>fbapi20140116</string>
-      <string>fbapi20150313</string>
-      <string>fbapi20150629</string>
-      <string>fbapi20160328</string>
-      <string>fbauth</string>
-      <string>fb-messenger-share-api</string>
-      <string>fbauth2</string>
-      <string>fbshareextension</string>
-    </array>
+     <array>
+         <!-- common -->
+         <string>kakao490012993a5dd6ab20a19577f3410775</string>
 
+         <!-- KakaoTalk login -->
+         <string>kakaokompassauth</string>
+         <string>storykompassauth</string>
+
+         <!-- KakaoLink -->
+         <string>kakaolink</string>
+         <string>kakaotalk-5.9.7</string>
+     </array>
+     
 </dict>
 </plist>
