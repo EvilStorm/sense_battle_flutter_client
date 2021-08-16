@@ -79,7 +79,7 @@ class _ThirdPartySignInSectionState extends State<ThirdPartySignInSection> {
             iconColor: Colors.black,
             backgroundColor: Color(0xFF555555),
             callback: () async {
-              
+              signInProvider.byApple();
             } 
           ),
         ],

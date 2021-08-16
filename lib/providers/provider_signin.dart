@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kakao_flutter_sdk/all.dart';
 import 'package:kakao_flutter_sdk/auth.dart';
 import 'package:sense_battle/models/password_level_model.dart';
 import 'package:sense_battle/providers/fetch_state.dart';
 import 'package:sense_battle/utils/Print.dart';
+import 'package:http/http.dart' as http;
 
 
 class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
@@ -127,26 +127,80 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   void byKakaoTalk() async {
     try {
+      String authCode = await AuthCodeClient.instance.request();
 
-      final installed = await isKakaoTalkInstalled();
-      installed ? await UserApi.instance.loginWithKakaoTalk() : await UserApi.instance.loginWithKakaoAccount();
+      AccessTokenResponse token = await AuthApi.instance.issueAccessToken(authCode);
+      AccessTokenStore.instance.toStore(token); // S
 
-      // String authCode = await AuthCodeClient.instance.request();
+      var response = await http.post(
+        Uri.parse("http://127.0.0.1:2394/api/auth/callbacks/kakao/token"),
+        body: {"accessToken": token.accessToken}
+      );
 
-      // AccessTokenResponse token = await AuthApi.instance.issueAccessToken(authCode);
-      // AccessTokenStore.instance.toStore(token); // S
-      OAuthToken token = await AccessTokenStore.instance.fromStore();
+      var userCreate = await FirebaseAuth.instance.signInWithCustomToken(response.body);
 
-      Print.e("Token :$token");
+      Print.e("Token :$userCreate");
     } catch (e) {
       Print.e(e);
+    } finally {
+      notifyListeners();
     }
-    
   }
-  
+
+  void byApple() async {
+    try {
+
+      // final clientState = Uuid().v4();
+      // final url = Uri.https('appleid.apple.com', '/auth/authorize', {
+      //   'response_type': 'code id_token',
+      //   'client_id': "com.hj.senseBattle",
+      //   'response_mode': 'form_post',
+      //   'redirect_uri':
+      //       'https://irradiated-airy-citron.glitch.me/callbacks/apple/sign_in',
+      //   'scope': 'email name',
+      //   'state': clientState,
+      // });
+
+      // final result = await FlutterWebAuth.authenticate(
+      //     url: url.toString(), callbackUrlScheme: "applink");
+
+      // final body = Uri.parse(result).queryParameters;
+      // final oauthCredential = OAuthProvider("apple.com").credential(
+      //   idToken: body['id_token'],
+      //   accessToken: body['code'],
+      // );
+      // var userCreate = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
+      
+      // Print.e("Token :$userCreate");
+      // final appleCredential = await SignInWithApple.getAppleIDCredential(
+      //   scopes: [
+      //     AppleIDAuthorizationScopes.email
+      //   ],
+      //   webAuthenticationOptions: WebAuthenticationOptions(
+      //     clientId: "com.login.flutter-firebase-sns-login.web",
+      //     redirectUri: Uri.parse(
+      //         "https://irradiated-airy-citron.glitch.me/callbacks/sign_in_with_apple"),
+      //   ),
+      // );
+      
+
+      // final oAuthCredential = OAuthProvider("apple.com").credential(
+      //   idToken: appleCredential.identityToken,
+      //   accessToken: appleCredential.authorizationCode
+      // );
+
+      // var userCreate = await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
+      // Print.e("Token :$userCreate");
+    } catch (e) {
+      Print.e(e);
+    } finally {
+      notifyListeners();
+    }
+  }
+
   void signInOut() async {
     await FirebaseAuth.instance.signOut();
-    _userCredential = null;
+
     notifyListeners();
   }
 }
