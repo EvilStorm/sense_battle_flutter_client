@@ -52,26 +52,20 @@
 	<string>ebbe4a73cb64d9cf8c3dacf3ae33b64a</string>
 	<key>FacebookDisplayName</key>
 	<string>SenseBattle</string>
+	<key>KAKAO_APP_KEY</key>
+	<string>490012993a5dd6ab20a19577f3410775</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>fbapi</string>
-		<string>fbapi20130214</string>
-		<string>fbapi20130410</string>
-		<string>fbapi20130702</string>
-		<string>fbapi20131010</string>
-		<string>fbapi20131219</string>
-		<string>fbapi20140410</string>
-		<string>fbapi20140116</string>
-		<string>fbapi20150313</string>
-		<string>fbapi20150629</string>
-		<string>fbapi20160328</string>
-		<string>fbauth</string>
-		<string>fb-messenger-share-api</string>
-		<string>fbauth2</string>
-		<string>fbshareextension</string>
+		<string>kakao490012993a5dd6ab20a19577f3410775</string>
+		<string>kakaokompassauth</string>
+		<string>storykompassauth</string>
+		<string>kakaolink</string>
+		<string>kakaotalk-5.9.7</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MinimumOSVersion</key>
+	<string>13.0</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -79,8 +73,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -89,23 +81,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>KAKAO_APP_KEY</key>
-	<string>490012993a5dd6ab20a19577f3410775</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-    <key>LSApplicationQueriesSchemes</key>
-     <array>
-         <!-- common -->
-         <string>kakao490012993a5dd6ab20a19577f3410775</string>
-
-         <!-- KakaoTalk login -->
-         <string>kakaokompassauth</string>
-         <string>storykompassauth</string>
-
-         <!-- KakaoLink -->
-         <string>kakaolink</string>
-         <string>kakaotalk-5.9.7</string>
-     </array>
-     
 </dict>
 </plist>

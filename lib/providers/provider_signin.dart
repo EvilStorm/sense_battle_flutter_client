@@ -7,6 +7,7 @@ import 'package:sense_battle/models/password_level_model.dart';
 import 'package:sense_battle/providers/fetch_state.dart';
 import 'package:sense_battle/utils/Print.dart';
 import 'package:http/http.dart' as http;
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 
 class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
@@ -172,25 +173,28 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       // var userCreate = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
       
       // Print.e("Token :$userCreate");
-      // final appleCredential = await SignInWithApple.getAppleIDCredential(
-      //   scopes: [
-      //     AppleIDAuthorizationScopes.email
-      //   ],
-      //   webAuthenticationOptions: WebAuthenticationOptions(
-      //     clientId: "com.login.flutter-firebase-sns-login.web",
-      //     redirectUri: Uri.parse(
-      //         "https://irradiated-airy-citron.glitch.me/callbacks/sign_in_with_apple"),
-      //   ),
-      // );
+      Print.e("Auth Apple GOGO  ");
+      final appleCredential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email
+        ],
+        // webAuthenticationOptions: WebAuthenticationOptions(
+        //   clientId: "com.login.flutter-firebase-sns-login.web",
+        //   redirectUri: Uri.parse(
+        //       "https://irradiated-airy-citron.glitch.me/callbacks/sign_in_with_apple"),
+        // ),
+      );
       
+      Print.e("Auth Apple GOGO2222  ${appleCredential.toString()}");
 
-      // final oAuthCredential = OAuthProvider("apple.com").credential(
-      //   idToken: appleCredential.identityToken,
-      //   accessToken: appleCredential.authorizationCode
-      // );
+      final oAuthCredential = OAuthProvider("apple.com").credential(
+        idToken: appleCredential.identityToken,
+        accessToken: appleCredential.authorizationCode
+      );
 
-      // var userCreate = await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
-      // Print.e("Token :$userCreate");
+      var userCreate = await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
+      Print.e("Auth Apple GOGO33");
+      Print.e("Token :$userCreate");
     } catch (e) {
       Print.e(e);
     } finally {

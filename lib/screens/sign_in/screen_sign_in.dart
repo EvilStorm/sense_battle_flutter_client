@@ -127,7 +127,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     SizedBox(height: Constants.sapceGap*2,),
-                    ThirdPartySignInSection(height: 300,),
+                    Expanded(child: ThirdPartySignInSection(height: 300,)),
                   ],
                 ),
               ),
