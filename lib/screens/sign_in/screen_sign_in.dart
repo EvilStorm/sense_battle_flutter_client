@@ -1,19 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
-import 'package:kakao_flutter_sdk/user.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/constants.dart';
 import 'package:sense_battle/providers/fetch_state.dart';
 
 import 'package:sense_battle/providers/provider_signin.dart';
-import 'package:sense_battle/screens/email_validation/email_validation_screen.dart';
-import 'package:sense_battle/screens/main/main_screen.dart';
-import 'package:sense_battle/screens/sign_in/add_account_email.dart';
-import 'package:sense_battle/screens/sign_in/sense_battle_signin_button.dart';
-import 'package:sense_battle/screens/sign_in/third_party_signin.dart';
-import 'package:sense_battle/screens/widgets/bottom_show_keyboard_wrapper.dart';
+import 'package:sense_battle/screens/sign_in/border_horizental.dart';
+import 'package:sense_battle/screens/sign_in/sign_in_with_email.dart';
+import 'package:sense_battle/screens/sign_in/thrid_party_sign_in/third_party_signin.dart';
 import 'package:sense_battle/screens/widgets/circular_progress.dart';
 import 'package:sense_battle/utils/Print.dart';
 
@@ -30,7 +24,6 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   void initState() {
-    UserApi.instance.logout();
     super.initState();
   }
 
@@ -61,84 +54,74 @@ class _SignInScreenState extends State<SignInScreen> {
           signInProvider.userCredential!.user?.emailVerified == false 
           && signInProvider.userCredential?.additionalUserInfo?.providerId == "password"
         ) {
-          Get.off(() => EmailValidationScreen());
+          Get.offAllNamed('/emailVaildation');
         } else {
-          Get.off(() => MainScreen());
+          Get.offAllNamed('/main');
         }
       });
     }
 
     return Scaffold(
-      resizeToAvoidBottomInset: true, 
       body: SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: double.infinity,
           color: Theme.of(context).backgroundColor,
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap),
-                child: Column(
-                  children: [
-                    SizedBox(height: Constants.sapceGap*2,),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'SignIn',
-                        style: Theme.of(context).textTheme.headline1,
+          child: SingleChildScrollView(
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap),
+                  child: Column(
+                    children: [
+                      SizedBox(height: Constants.sapceGap*4,),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'SignIn',
+                          style: Theme.of(context).textTheme.headline1,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 100.0,),
-                    SenseBattleSignInButton(),
-                    SizedBox(height: Constants.sapceGap/2,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
+                      SizedBox(height: 50.0,),
+                      Container(
+                        height: 300.0,
+                        child: SignInWithEmail()
+                      ),
+                      SizedBox(height: Constants.sapceGap/2,),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap),
+                          child: TextButton(
                             onPressed: (){
-
-                            },
-                            child: Text(
-                              '약관보기',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: (){
-                              showModalBottomSheet(
-                                isScrollControlled: true,
-                                context: context, 
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(Constants.sapceGap),
-                                ),
-                                backgroundColor: Theme.of(context).dialogBackgroundColor,
-                                builder: (context) => BottomKeyboardShowWrapper( height: 480.0, widget: AddAccountWithEmail())
-                              );
+                              Get.toNamed('/joinUs');
                             },
                             child: Text(
                               '회원가입',
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
-                          )
-                        ],
+                          ),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: Constants.sapceGap*2,),
-                    Expanded(child: ThirdPartySignInSection(height: 300,)),
-                  ],
+                      SizedBox(height: Constants.sapceGap*2,),
+                      HorizentalBorder(),
+                      SizedBox(height: Constants.sapceGap*2,),
+                      ThirdPartySignInSection(height: 100,),
+                      SizedBox(height: Constants.sapceGap*4,),
+          
+                    ],
+                  ),
                 ),
-              ),
-              Visibility(
-                visible: signInProvider.fetchState == FetchState.PROGRESS,
-                child: CircularProgress(),
-              )
-            ],
+                Visibility(
+                  visible: signInProvider.fetchState == FetchState.PROGRESS,
+                  child: CircularProgress(),
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+

@@ -15,7 +15,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
   PasswordLevelModel _passwordVaildationMessage = PasswordLevelModel();
   UserCredential? _userCredential;
 
-
+  
 
   String? get errorMessage => _errMsg;
   PasswordLevelModel get passwordVaildationMessage => _passwordVaildationMessage;
@@ -192,11 +192,11 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  
+
 
   void signInOut() async {
     await FirebaseAuth.instance.signOut();
-
+    _userCredential = null;
     notifyListeners();
   }
 }

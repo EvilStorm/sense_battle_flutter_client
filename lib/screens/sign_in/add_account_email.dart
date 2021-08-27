@@ -126,8 +126,6 @@ class _AddAccountWithEmailState extends State<AddAccountWithEmail> {
               }
               signInProvider.addAccountWithEmail(
                   emailController.text, passwordController.text);
-              
-              Get.back();
             },
             child: Text(
               '회원가입',

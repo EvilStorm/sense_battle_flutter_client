@@ -6,17 +6,25 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/constants.dart';
 import 'package:sense_battle/providers/provider_signin.dart';
+import 'package:sense_battle/utils/Print.dart';
 
-class SignInWithEmail extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  late SignInProvider signInProvider;
-
- bool isPasswodVaildate() => passwordController.text.length >= 8;
-
+class SignInWithEmail extends StatefulWidget {
   SignInWithEmail({
     Key? key,
   }) : super(key: key);
+
+  @override
+  _SignInWithEmailState createState() => _SignInWithEmailState();
+}
+
+class _SignInWithEmailState extends State<SignInWithEmail> {
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+
+  late SignInProvider signInProvider;
+
+ bool isPasswodVaildate() => passwordController.text.length >= 8;
 
   bool checkInputVaildation() {
     if (!isCanUseEmail()) {
@@ -49,6 +57,8 @@ class SignInWithEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Print.e("SignInWithEmail Build");
     signInProvider = Provider.of<SignInProvider>(context);
 
     return Column(
@@ -89,8 +99,6 @@ class SignInWithEmail extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               if(checkInputVaildation()) {
-  
-                Get.back();
                 signInProvider.signinWithEmail(emailController.text, passwordController.text);
               }
             },
