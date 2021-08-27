@@ -138,9 +138,9 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
         body: {"accessToken": token.accessToken}
       );
 
-      var userCreate = await FirebaseAuth.instance.signInWithCustomToken(response.body);
+     _userCredential = await FirebaseAuth.instance.signInWithCustomToken(response.body);
 
-      Print.e("Token :$userCreate");
+      Print.e("Token :$_userCredential");
     } catch (e) {
       Print.e(e);
     } finally {
@@ -173,34 +173,26 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       // var userCreate = await FirebaseAuth.instance.signInWithCredential(oauthCredential);
       
       // Print.e("Token :$userCreate");
-      Print.e("Auth Apple GOGO  ");
       final appleCredential = await SignInWithApple.getAppleIDCredential(
         scopes: [
           AppleIDAuthorizationScopes.email
         ],
-        // webAuthenticationOptions: WebAuthenticationOptions(
-        //   clientId: "com.login.flutter-firebase-sns-login.web",
-        //   redirectUri: Uri.parse(
-        //       "https://irradiated-airy-citron.glitch.me/callbacks/sign_in_with_apple"),
-        // ),
       );
       
-      Print.e("Auth Apple GOGO2222  ${appleCredential.toString()}");
-
       final oAuthCredential = OAuthProvider("apple.com").credential(
         idToken: appleCredential.identityToken,
         accessToken: appleCredential.authorizationCode
       );
 
-      var userCreate = await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
-      Print.e("Auth Apple GOGO33");
-      Print.e("Token :$userCreate");
+      _userCredential = await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
     } catch (e) {
       Print.e(e);
     } finally {
       notifyListeners();
     }
   }
+
+  
 
   void signInOut() async {
     await FirebaseAuth.instance.signOut();
