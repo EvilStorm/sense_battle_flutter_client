@@ -5,11 +5,12 @@ import 'package:sense_battle/constants/constants.dart';
 import 'package:sense_battle/providers/fetch_state.dart';
 
 import 'package:sense_battle/providers/provider_signin.dart';
-import 'package:sense_battle/screens/sign_in/border_horizental.dart';
-import 'package:sense_battle/screens/sign_in/sign_in_with_email.dart';
-import 'package:sense_battle/screens/sign_in/thrid_party_sign_in/third_party_signin.dart';
+import 'package:sense_battle/screens/sign_in/widget_border_horizental.dart';
+import 'package:sense_battle/screens/sign_in/widget_sign_in_with_email.dart';
 import 'package:sense_battle/screens/widgets/circular_progress.dart';
 import 'package:sense_battle/utils/Print.dart';
+
+import 'thrid_party_sign_in/widget_btns_section.dart';
 
 class SignInScreen extends StatefulWidget {
 

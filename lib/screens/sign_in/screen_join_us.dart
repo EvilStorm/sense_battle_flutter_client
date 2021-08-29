@@ -4,12 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/constants.dart';
 import 'package:sense_battle/providers/provider_signin.dart';
 import 'package:sense_battle/screens/common/title_with_back.dart';
-import 'package:sense_battle/screens/email_validation/email_validation_screen.dart';
-import 'package:sense_battle/screens/main/main_screen.dart';
-import 'package:sense_battle/screens/sign_in/add_account_email.dart';
-import 'package:sense_battle/screens/sign_in/border_horizental.dart';
-import 'package:sense_battle/screens/sign_in/thrid_party_sign_in/third_party_signin.dart';
+import 'package:sense_battle/screens/sign_in/widget_add_account_email.dart';
+import 'package:sense_battle/screens/sign_in/widget_border_horizental.dart';
 import 'package:sense_battle/utils/Print.dart';
+
+import 'thrid_party_sign_in/widget_btns_section.dart';
 
 class JoinUsScreen extends StatefulWidget {
   const JoinUsScreen({ Key? key }) : super(key: key);

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/color_store.dart';
 import 'package:sense_battle/providers/provider_signin.dart';
@@ -20,9 +21,11 @@ class MyHttpOverrides extends HttpOverrides{
   } 
 }
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = new MyHttpOverrides();
+  
+  await GetStorage.init();
 
   runApp(MyApp());
 }

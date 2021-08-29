@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/providers/provider_signin.dart';
-import 'package:sense_battle/screens/sign_in/thrid_party_sign_in/round_button.dart';
+
+import 'button_circle.dart';
 
 class ThirdPartySignInSection extends StatefulWidget {
   final double? height;
@@ -35,7 +36,7 @@ class _ThirdPartySignInSectionState extends State<ThirdPartySignInSection> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          RoundButton(
+          CircleButton(
             callback: (){
               signInProvider.byGoogle();
             },
@@ -45,7 +46,7 @@ class _ThirdPartySignInSectionState extends State<ThirdPartySignInSection> {
                 height: 45,
               ),
           ),
-          RoundButton(
+          CircleButton(
             callback: (){
               signInProvider.byFacebook();
             },
@@ -57,7 +58,7 @@ class _ThirdPartySignInSectionState extends State<ThirdPartySignInSection> {
                 color: Colors.white,
               ),
           ),
-          RoundButton(
+          CircleButton(
             callback: (){
               signInProvider.byKakaoTalk();
             },            
@@ -68,7 +69,7 @@ class _ThirdPartySignInSectionState extends State<ThirdPartySignInSection> {
                 height: 45,
               ),
           ),
-          RoundButton(
+          CircleButton(
             callback: (){
               signInProvider.byApple();
             },

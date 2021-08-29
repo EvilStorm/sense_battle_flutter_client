@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sense_battle/constants/constants.dart';
-import 'package:sense_battle/screens/sign_in/sign_in_with_email.dart';
+import 'package:sense_battle/screens/sign_in/widget_sign_in_with_email.dart';
 import 'package:sense_battle/screens/widgets/bottom_show_keyboard_wrapper.dart';
 
 class SenseBattleSignInButton extends StatelessWidget {

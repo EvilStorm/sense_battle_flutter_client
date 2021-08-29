@@ -1,7 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/providers/provider_signin.dart';
 import 'package:sense_battle/constants/constants.dart';

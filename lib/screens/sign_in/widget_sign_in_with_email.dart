@@ -57,6 +57,8 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
 
   @override
   Widget build(BuildContext context) {
+emailController.text = 'gevilstorm@gmail.com';
+passwordController.text = '11111111';
 
     Print.e("SignInWithEmail Build");
     signInProvider = Provider.of<SignInProvider>(context);

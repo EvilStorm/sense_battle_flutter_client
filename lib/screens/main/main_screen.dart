@@ -21,8 +21,11 @@ class _MainScreenState extends State<MainScreen> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           color: Theme.of(context).backgroundColor,
-          child: Text(
-            signInProvider.userCredential?.user?.uid??"haha"
+          child: ElevatedButton(
+            onPressed: () {
+              signInProvider.signInOut();
+            }, 
+            child: Text(' Sign out')
           )
         ),
       ),

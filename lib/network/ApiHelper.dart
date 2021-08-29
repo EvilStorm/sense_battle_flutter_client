@@ -9,14 +9,26 @@ import 'package:sense_battle/utils/Print.dart';
 enum API_CALL_STATE {NOT_CALLED, CALLED}
 class ApiHelper {
   
-
-  final TEST_DOMAIN = "http://192.168.0.5:2394/api";
-  final LIVE_DOMAIN = "http://ec2-52-79-141-236.ap-northeast-2.compute.amazonaws.com:2394/api";
-  final IS_LIVE = true;
+  final pathPrefix = '/api';
+  final TEST_DOMAIN = "192.168.0.7:2394";
+  final LIVE_DOMAIN = "ec2-52-79-141-236.ap-northeast-2.compute.amazonaws.com:2394";
+  final IS_LIVE = false;
 
   final int APP_VER = 0;
 
   final HTTP_TIME_OUT_SEC = 3;
+
+  static final ApiHelper instance = ApiHelper.init();
+  factory ApiHelper() {
+    return instance;
+  }
+
+  ApiHelper.init() {}
+   
+  Map<String, String> header = {};
+  void addHeader(key, value) {
+    header[key] = value;
+  }
 
   String getDomain() {
     Print.i('getDomain $IS_LIVE');
@@ -27,17 +39,16 @@ class ApiHelper {
     LogginInterceptor(),
   ]);
 
-  Future<dynamic> get(String url) async {
-    Print.i(" WHAT>>> : $url" );
+  Future<dynamic> get(String path,  {Map<String, dynamic> queryParams = const{}}) async {
     var responseJson;
-    String token = await getString(SharedPrefKeys.JWT_TOKEN);
     try {
+      final uri = Uri.https(getDomain(), "$pathPrefix/$path", queryParams);
+
       final response = await http.get(
-        getDomain() + url,
-        headers: {
-          "x-access-token": token
-        }
+        uri,
+        headers: header
       );
+
       responseJson = _returnResponse(response);
     } on Exception catch(_) {
       Print.e(_);
@@ -46,16 +57,13 @@ class ApiHelper {
     return responseJson;
   }
 
-  Future<dynamic> post(String url, dynamic body) async {
+  Future<dynamic> post(String path, {dynamic queryParams, dynamic body}) async {
     var responseJson;
-    String token = await getString(SharedPrefKeys.JWT_TOKEN);
     try {
+      final uri = Uri.http(getDomain(), "$pathPrefix/$path", queryParams);
       final response = await http.post(
-        getDomain() + url,
-        headers: {
-          "x-access-token": token,
-          "Content-Type": "application/json"
-        },
+        uri,
+        headers: header,
         body: body
       );
       responseJson = _returnResponse(response);
@@ -64,16 +72,13 @@ class ApiHelper {
     }
     return responseJson;
   }
-  Future<dynamic> patch(String url, dynamic body) async {
+  Future<dynamic> patch(String path, {dynamic queryParams = const{}, dynamic body = const{}}) async {
     var responseJson;
-    String token = await getString(SharedPrefKeys.JWT_TOKEN);
     try {
-      final response = await http.patch(
-        getDomain() + url,
-        headers: {
-          "x-access-token": token,
-          "Content-Type": "application/json"
-        },
+      final uri = Uri.http(getDomain(), "$pathPrefix/$path", queryParams);
+      final response = await http.put(
+        uri,
+        headers: header,
         body: body
       );
       responseJson = _returnResponse(response);
@@ -82,15 +87,13 @@ class ApiHelper {
     }
     return responseJson;
   }
-  Future<dynamic> delete(String url) async {
+  Future<dynamic> delete(String path) async {
     var responseJson;
-    String token = await getString(SharedPrefKeys.JWT_TOKEN);
     try {
+      final uri = Uri.http(getDomain(), "$pathPrefix/$path");
       final response = await http.delete(
-        getDomain() + url,
-        headers: {
-          "x-access-token": token
-        }
+        uri,
+        headers: header
       );
       responseJson = _returnResponse(response);
     } on Exception  {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sense_battle/constants/constants.dart';
 
-class RoundButton extends StatelessWidget {
+class CircleButton extends StatelessWidget {
   final Widget child;
   final Color? backgroundColor;
   final VoidCallback? callback;
-  const RoundButton({ 
+  const CircleButton({ 
     Key? key, 
     required this.child, 
     this.callback, 
