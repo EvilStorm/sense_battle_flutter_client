@@ -209,18 +209,22 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<UserInfoModel> getUserInfo(String? uId, String? email, SignInType signInType ) async {
 
-    if(uId == null || email == null) throw UnauthorisedException('회원정보가 없습니다.');
+    if(uId == null) throw UnauthorisedException('회원정보가 부족하여 가입이 취소되었습니다.');
     
+    var bodyParam = {
+       'identifyId': uId,
+       'joinType': signInType.index.toString()
+    };
+
+    if(email != null ) {
+      bodyParam['email'] = email;
+    }
+
     final response = await ApiHelper.instance.post(
       'user',
-      body: {
-        'identifyId': uId,
-        'email': email,
-        'joinType': signInType.index.toString()
-      }
+      body: bodyParam
     );
 
-    Print.e("response: ${response.toString()}");
     return UserInfoModel.fromMap(response['data']);
   }
 

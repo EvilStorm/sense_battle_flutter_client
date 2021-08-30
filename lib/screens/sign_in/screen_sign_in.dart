@@ -66,7 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
       body: SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: double.infinity,
+          height: MediaQuery.of(context).size.height,
           color: Theme.of(context).backgroundColor,
           child: SingleChildScrollView(
             child: Stack(
@@ -113,9 +113,11 @@ class _SignInScreenState extends State<SignInScreen> {
                     ],
                   ),
                 ),
-                Visibility(
-                  visible: signInProvider.fetchState == FetchState.PROGRESS,
-                  child: CircularProgress(),
+                Positioned.fill(
+                  child: Visibility(
+                    visible: signInProvider.fetchState == FetchState.PROGRESS,
+                    child: CircularProgress(),
+                  ),
                 )
               ],
             ),
