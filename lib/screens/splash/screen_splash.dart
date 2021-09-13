@@ -20,6 +20,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late SplashProvider provider;
 
   @override
   void initState() {
@@ -59,6 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.of(Get.overlayContext!).pop();
           if(pos == 0) {
             Print.e('종료');
+            exit(0);
           } else {
             Print.e('스토어 이동');
           }
@@ -74,6 +76,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Navigator.of(Get.overlayContext!).pop();
           if(pos == 0) {
             Print.e('무시');
+            provider.checkAppVer();
           } else {
             Print.e('스토어 이동');
           }
@@ -85,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SplashProvider provider = Provider.of<SplashProvider>(context);
+    provider = Provider.of<SplashProvider>(context);
 
 
     WidgetsBinding.instance!.addPostFrameCallback((_) {

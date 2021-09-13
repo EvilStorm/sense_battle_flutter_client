@@ -33,11 +33,12 @@ class SplashProvider with ChangeNotifier, DiagnosticableTreeMixin {
   void getAppStartData() async {
     Print.e('getAppStartData Called');
 
-    int appVer = storage.read(KeyStore.appVer_I)??0;
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    int appVer = storage.read(KeyStore.appVer_I)??int.parse(packageInfo.buildNumber);
     int notifySeq = storage.read(KeyStore.notifySeq_I)??0;
     int termSeq = storage.read(KeyStore.termSeq_I)??0;
 
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
     try {
       ResponseModel response = await ApiHelper().get('appStart/notify/$notifySeq/appVer/$appVer/term/$termSeq');
