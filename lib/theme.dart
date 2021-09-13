@@ -38,6 +38,7 @@ class Themes {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(2)),
         ),
+        
       )
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(

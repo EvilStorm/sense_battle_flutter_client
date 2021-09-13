@@ -21,19 +21,15 @@ class _EmailValidationScreenState extends State<EmailValidationScreen> {
   
   late SignInProvider signInProvider;
   bool isDispose = false;
+  bool reqValidationCode = false;
+  String reqValidationCodeText = '인증번호 받기';
+
+  final int reqValidationTerm = 60*5;
+  int validationRemainTime = 60*5;
+
 
   @override
   void initState() {
-    FirebaseAuth.instance.userChanges().listen((event) { 
-      Print.e(" Firebase Auth userChanges??? :$event");
-
-    });
-    FirebaseAuth.instance.idTokenChanges().listen((event) { 
-      Print.e(" Firebase Auth idTokenChanges??? :$event");
-      
-    });
-
-
     FirebaseAuth.instance.authStateChanges().listen((event) { 
       Print.e(" Firebase Auth authStateChanges??? :$event");
       if(event == null) {
@@ -69,6 +65,43 @@ class _EmailValidationScreenState extends State<EmailValidationScreen> {
     super.dispose();
   }
 
+  format(Duration d) => d.toString().split('.').first.padLeft(8, "0");
+  void btnEnableTimer() {
+    Timer.periodic(Duration(seconds: 1), (timer) { 
+      validationRemainTime = validationRemainTime - 1;
+      
+      if(isDispose) {
+        timer.cancel();
+      }
+
+      setState(() {
+        
+        if(validationRemainTime <= 0) {
+          timer.cancel();
+
+          reqValidationCode = false;
+          reqValidationCodeText = '인증번호 받기';
+          validationRemainTime = reqValidationTerm;
+        } else {
+          final time = Duration(seconds: validationRemainTime);
+          reqValidationCodeText = format(time);
+
+        }
+      });
+    });
+  }
+
+  void reqSendValidationEmail() {
+    if(!reqValidationCode) {
+      setState(() {
+        reqValidationCode = true;
+      });
+      btnEnableTimer();
+      signInProvider.userCredential!.user?.sendEmailVerification();
+      startValifyListener();
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
 
@@ -83,17 +116,22 @@ class _EmailValidationScreenState extends State<EmailValidationScreen> {
               '이메일 인증후 사용 할 수 있습니다.',
               style: Theme.of(context).textTheme.subtitle1,
             ),
+            SizedBox(height: Constants.sapceGap,),
+            Text(
+              '이메일 인증번호를 수신하기까지는 시간이 걸립니다.\n5분 후 메일이 도착하지 않을 시 다시 인증번호 받기 버튼을 눌러주세요.',
+              style: Theme.of(context).textTheme.caption!.copyWith(
+                color: Theme.of(context).primaryColor
+              ),
+
+            ),
             SizedBox(height: Constants.sapceGap*2,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    signInProvider.userCredential!.user?.sendEmailVerification();
-                    startValifyListener();
-                  }, 
+                  onPressed: () => reqSendValidationEmail(),
                   child: Text(
-                    '인증번호 받기'
+                    reqValidationCodeText
                   )
                 ),
 
