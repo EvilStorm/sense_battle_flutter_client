@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/constants.dart';
@@ -54,40 +55,42 @@ class _JoinUsScreenState extends State<JoinUsScreen> {
     }
 
 
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          color: Theme.of(context).backgroundColor,
-          child: Column(
-            children: [
-              TitleWithBack(
-                title: '회원가입',
-                callback: () => Get.back(),
-              ),
-              SingleChildScrollView(
-                child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap),
-                    child: Column(
-                      children: [
-                        SizedBox(height: Constants.sapceGap*2,),
-                        Container(
-                          height: 350,
-                          child: AddAccountWithEmail()
-                        ),
-                        SizedBox(height: Constants.sapceGap*2,),
-                        HorizentalBorder(),
-                        SizedBox(height: Constants.sapceGap*2,),
-                        ThirdPartySignInSection(height: 100,),
-                        SizedBox(height: Constants.sapceGap*4,),
-                      ],
-                    ),
-                  )
+    return KeyboardDismissOnTap(
+      child: Scaffold(
+        body: SafeArea(
+          child: Container(
+            color: Theme.of(context).backgroundColor,
+            child: Column(
+              children: [
+                TitleWithBack(
+                  title: '회원가입',
+                  callback: () => Get.back(),
                 ),
-              ),
-            ],
-          ),
-        )
+                SingleChildScrollView(
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap),
+                      child: Column(
+                        children: [
+                          SizedBox(height: Constants.sapceGap*2,),
+                          Container(
+                            height: 350,
+                            child: AddAccountWithEmail()
+                          ),
+                          SizedBox(height: Constants.sapceGap*2,),
+                          HorizentalBorder(),
+                          SizedBox(height: Constants.sapceGap*2,),
+                          ThirdPartySignInSection(height: 100,),
+                          SizedBox(height: Constants.sapceGap*4,),
+                        ],
+                      ),
+                    )
+                  ),
+                ),
+              ],
+            ),
+          )
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:http_interceptor/http/intercepted_client.dart';
+import 'package:sense_battle/models/model_response.dart';
 import 'package:sense_battle/network/AppException.dart';
 import 'package:sense_battle/network/LogginInterceptor.dart';
 import 'package:sense_battle/utils/Print.dart';
@@ -10,7 +11,7 @@ enum API_CALL_STATE {NOT_CALLED, CALLED}
 class ApiHelper {
   
   final pathPrefix = '/api';
-  final TEST_DOMAIN = "192.168.0.7:2394";
+  final TEST_DOMAIN = "192.168.0.6:2394";
   final LIVE_DOMAIN = "ec2-52-79-141-236.ap-northeast-2.compute.amazonaws.com:2394";
   final IS_LIVE = false;
 
@@ -40,25 +41,23 @@ class ApiHelper {
   ]);
 
   Future<dynamic> get(String path,  {Map<String, dynamic> queryParams = const{}}) async {
-    var responseJson;
     try {
-      final uri = Uri.https(getDomain(), "$pathPrefix/$path", queryParams);
+      final uri = Uri.http(getDomain(), "$pathPrefix/$path", queryParams);
 
       final response = await http.get(
         uri,
         headers: header
       );
 
-      responseJson = _returnResponse(response);
+      return ResponseModel.fromMap(_returnResponse(response));
+
     } on Exception catch(_) {
       Print.e(_);
       throw FetchDataException(_.toString());
     }
-    return responseJson;
   }
 
   Future<dynamic> post(String path, {dynamic queryParams, dynamic body}) async {
-    var responseJson;
     try {
       final uri = Uri.http(getDomain(), "$pathPrefix/$path", queryParams);
       final response = await http.post(
@@ -66,14 +65,12 @@ class ApiHelper {
         headers: header,
         body: body
       );
-      responseJson = _returnResponse(response);
+      return ResponseModel.fromMap(_returnResponse(response));
     } catch (e) {
       throw e;
     }
-    return responseJson;
   }
   Future<dynamic> patch(String path, {dynamic queryParams = const{}, dynamic body = const{}}) async {
-    var responseJson;
     try {
       final uri = Uri.http(getDomain(), "$pathPrefix/$path", queryParams);
       final response = await http.put(
@@ -81,25 +78,22 @@ class ApiHelper {
         headers: header,
         body: body
       );
-      responseJson = _returnResponse(response);
+      return ResponseModel.fromMap(_returnResponse(response));
     } on Exception  {
       throw FetchDataException('No Internet connection');
     }
-    return responseJson;
   }
   Future<dynamic> delete(String path) async {
-    var responseJson;
     try {
       final uri = Uri.http(getDomain(), "$pathPrefix/$path");
       final response = await http.delete(
         uri,
         headers: header
       );
-      responseJson = _returnResponse(response);
+      return ResponseModel.fromMap(_returnResponse(response));
     } on Exception  {
       throw FetchDataException('No Internet connection');
     }
-    return responseJson;
   }
 
   dynamic _returnResponse(Response response) {
