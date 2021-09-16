@@ -13,7 +13,7 @@ import 'package:sense_battle/screens/widgets/dialog_box.dart';
 import 'package:sense_battle/utils/Print.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({ Key? key }) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -24,7 +24,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-
     KakaoContext.clientId = "490012993a5dd6ab20a19577f3410775";
 
     super.initState();
@@ -34,11 +33,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void switchPage() async {
     // await FirebaseAuth.instance.signOut();
 
-    // FirebaseAuth.instance.authStateChanges().listen((event) { 
+    // FirebaseAuth.instance.authStateChanges().listen((event) {
     //   if(event == null) {
     //     Get.off(() => SignInScreen());
     //   }else if (
-    //     event.emailVerified == false 
+    //     event.emailVerified == false
     //     && event.providerData.elementAt(0).providerId == "password"
     //   ) {
     //     Get.off(() => EmailValidationScreen());
@@ -49,40 +48,26 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkAppVersion(AppVersionModel info) {
-    if(info.nessesary) {
-      DialogBox().confirmDialog(
-        info.message,
-        title: '필수 업데이트',
-        leftText: '종료',
-        rightText: '스토어 이동',
-        barrierDismissible: false,
-        callback: (pos) {
-          Navigator.of(Get.overlayContext!).pop();
-          if(pos == 0) {
-            Print.e('종료');
-            exit(0);
-          } else {
-            Print.e('스토어 이동');
-          }
+    if (info.nessesary) {
+      DialogBox().confirmDialog(info.message, title: '필수 업데이트', leftText: '종료', rightText: '스토어 이동', barrierDismissible: false, callback: (pos) {
+        Navigator.of(Get.overlayContext!).pop();
+        if (pos == 0) {
+          Print.e('종료');
+          exit(0);
+        } else {
+          Print.e('스토어 이동');
         }
-      );
+      });
     } else {
-      DialogBox().confirmDialog(
-        info.message,
-        title: '업데이트',
-        leftText: '무시',
-        rightText: '스토어 이동',
-        callback: (pos) {
-            Navigator.of(Get.overlayContext!).pop();
-          if(pos == 0) {
-            Print.e('무시');
-            provider.checkAppVer();
-          } else {
-            Print.e('스토어 이동');
-          }
+      DialogBox().confirmDialog(info.message, title: '업데이트', leftText: '무시', rightText: '스토어 이동', callback: (pos) {
+        Navigator.of(Get.overlayContext!).pop();
+        if (pos == 0) {
+          Print.e('무시');
+          provider.checkAppVer();
+        } else {
+          Print.e('스토어 이동');
         }
-      );
-
+      });
     }
   }
 
@@ -90,13 +75,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     provider = Provider.of<SplashProvider>(context);
 
-
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      if(provider.appVersion != null) {
+      if (provider.appVersion != null) {
         checkAppVersion(provider.appVersion!);
       }
     });
-
 
     Print.e('Splash Build... Provider NotifyS: ${provider.notifies?.normalNotifies?.length}');
     return Scaffold(
@@ -111,21 +94,21 @@ class _SplashScreenState extends State<SplashScreen> {
                   style: Theme.of(context).textTheme.headline1,
                 ),
               ),
-              if((provider.notifies?.normalNotifies?.length??0) > 0) 
+              if ((provider.notifies?.normalNotifies?.length ?? 0) > 0)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap*2, vertical: Constants.sapceGap),
+                  padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap * 2, vertical: Constants.sapceGap),
                   child: NotifyWidget(
                     data: provider.notifies!.normalNotifies!,
                     callback: (_) => provider.checkNotify(),
                   ),
                 ),
-              if(provider.term != null) 
+              if (provider.term != null)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap*2, vertical: Constants.sapceGap),
+                  padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap * 2, vertical: Constants.sapceGap),
                   child: TermWidget(
                     data: provider.term!,
                     callback: (_) {
-                      if(_ == -1) {
+                      if (_ == -1) {
                         exit(0);
                       } else {
                         provider.checkTerm();

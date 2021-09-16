@@ -12,8 +12,6 @@ class ResponseModel {
     required this.data,
   });
 
-  
-
   ResponseModel copyWith({
     String? status,
     int? code,
@@ -58,19 +56,12 @@ class ResponseModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is ResponseModel &&
-      other.status == status &&
-      other.code == code &&
-      other.errors == errors &&
-      other.data == data;
+
+    return other is ResponseModel && other.status == status && other.code == code && other.errors == errors && other.data == data;
   }
 
   @override
   int get hashCode {
-    return status.hashCode ^
-      code.hashCode ^
-      errors.hashCode ^
-      data.hashCode;
+    return status.hashCode ^ code.hashCode ^ errors.hashCode ^ data.hashCode;
   }
 }

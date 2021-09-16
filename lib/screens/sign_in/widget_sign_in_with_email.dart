@@ -24,7 +24,7 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
 
   late SignInProvider signInProvider;
 
- bool isPasswodVaildate() => passwordController.text.length >= 8;
+  bool isPasswodVaildate() => passwordController.text.length >= 8;
 
   bool checkInputVaildation() {
     if (!isCanUseEmail()) {
@@ -48,17 +48,17 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
     }
     FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
     Get.rawSnackbar(
-          message: '비밀번호 초기화 링크가 이메일로 전송되었습니다.\n이메일을 확인해주세요.', 
-          snackPosition: SnackPosition.TOP,
-          borderRadius: Constants.sapceGap,
-          duration: Duration(seconds: 2),
-        );
+      message: '비밀번호 초기화 링크가 이메일로 전송되었습니다.\n이메일을 확인해주세요.',
+      snackPosition: SnackPosition.TOP,
+      borderRadius: Constants.sapceGap,
+      duration: Duration(seconds: 2),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-emailController.text = 'gevilstorm@gmail.com';
-passwordController.text = '11111111';
+    emailController.text = 'gevilstorm@gmail.com';
+    passwordController.text = '11111111';
 
     Print.e("SignInWithEmail Build");
     signInProvider = Provider.of<SignInProvider>(context);
@@ -67,7 +67,9 @@ passwordController.text = '11111111';
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Spacer(flex: 1,),
+        Spacer(
+          flex: 1,
+        ),
         TextField(
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
@@ -76,7 +78,9 @@ passwordController.text = '11111111';
             labelText: '이메일',
           ),
         ),
-        Spacer(flex: 1,),
+        Spacer(
+          flex: 1,
+        ),
         TextField(
           controller: passwordController,
           obscureText: true,
@@ -95,12 +99,14 @@ passwordController.text = '11111111';
             ),
           ),
         ),
-        Spacer(flex: 2,),
+        Spacer(
+          flex: 2,
+        ),
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
             onPressed: () {
-              if(checkInputVaildation()) {
+              if (checkInputVaildation()) {
                 signInProvider.signinWithEmail(emailController.text, passwordController.text);
               }
             },
@@ -109,7 +115,9 @@ passwordController.text = '11111111';
             ),
           ),
         ),
-        Spacer(flex: 1,),
+        Spacer(
+          flex: 1,
+        ),
       ],
     );
   }

@@ -15,8 +15,6 @@ class UserInfoModel {
     this.nickName,
     this.availability,
   });
- 
-    
 
   UserInfoModel copyWith({
     String? identifyId,
@@ -70,23 +68,18 @@ class UserInfoModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is UserInfoModel &&
-      other.identifyId == identifyId &&
-      other.email == email &&
-      other.joinType == joinType &&
-      other.secureLevel == secureLevel &&
-      other.nickName == nickName &&
-      other.availability == availability;
+        other.identifyId == identifyId &&
+        other.email == email &&
+        other.joinType == joinType &&
+        other.secureLevel == secureLevel &&
+        other.nickName == nickName &&
+        other.availability == availability;
   }
 
   @override
   int get hashCode {
-    return identifyId.hashCode ^
-      email.hashCode ^
-      joinType.hashCode ^
-      secureLevel.hashCode ^
-      nickName.hashCode ^
-      availability.hashCode;
+    return identifyId.hashCode ^ email.hashCode ^ joinType.hashCode ^ secureLevel.hashCode ^ nickName.hashCode ^ availability.hashCode;
   }
 }

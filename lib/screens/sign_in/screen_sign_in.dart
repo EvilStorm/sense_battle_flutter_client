@@ -13,7 +13,6 @@ import 'package:sense_battle/utils/Print.dart';
 import 'thrid_party_sign_in/widget_btns_section.dart';
 
 class SignInScreen extends StatefulWidget {
-
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
@@ -31,30 +30,27 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     signInProvider = Provider.of<SignInProvider>(context);
-    
+
     Print.e("_userCredential: ${signInProvider.userCredential}");
 
-    Print.w(" MediaQuery.of(context).viewInsets.bottom: ${MediaQuery.of(context).viewInsets.bottom}" );
+    Print.w(" MediaQuery.of(context).viewInsets.bottom: ${MediaQuery.of(context).viewInsets.bottom}");
     if (signInProvider.errorMessage != null) {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         Get.rawSnackbar(
-          message: signInProvider.errorMessage!, 
+          message: signInProvider.errorMessage!,
           snackPosition: SnackPosition.TOP,
           backgroundColor: Theme.of(context).errorColor,
           borderRadius: Constants.sapceGap,
           duration: Duration(seconds: 2),
         );
         signInProvider.setErrorMessage(null);
-        }
-      );
+      });
     }
 
-    if(signInProvider.userCredential != null) {
+    if (signInProvider.userCredential != null) {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
-        if (
-          signInProvider.userCredential!.user?.emailVerified == false 
-          && signInProvider.userCredential?.additionalUserInfo?.providerId == "password"
-        ) {
+        if (signInProvider.userCredential!.user?.emailVerified == false &&
+            signInProvider.userCredential?.additionalUserInfo?.providerId == "password") {
           Get.offAllNamed('/emailVaildation');
         } else {
           Get.offAllNamed('/main');
@@ -75,7 +71,9 @@ class _SignInScreenState extends State<SignInScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap),
                   child: Column(
                     children: [
-                      SizedBox(height: Constants.sapceGap*4,),
+                      SizedBox(
+                        height: Constants.sapceGap * 4,
+                      ),
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
@@ -83,18 +81,19 @@ class _SignInScreenState extends State<SignInScreen> {
                           style: Theme.of(context).textTheme.headline1,
                         ),
                       ),
-                      SizedBox(height: 50.0,),
-                      Container(
-                        height: 300.0,
-                        child: SignInWithEmail()
+                      SizedBox(
+                        height: 50.0,
                       ),
-                      SizedBox(height: Constants.sapceGap/2,),
+                      Container(height: 300.0, child: SignInWithEmail()),
+                      SizedBox(
+                        height: Constants.sapceGap / 2,
+                      ),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap),
                           child: TextButton(
-                            onPressed: (){
+                            onPressed: () {
                               Get.toNamed('/joinUs');
                             },
                             child: Text(
@@ -104,12 +103,19 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: Constants.sapceGap*2,),
+                      SizedBox(
+                        height: Constants.sapceGap * 2,
+                      ),
                       HorizentalBorder(),
-                      SizedBox(height: Constants.sapceGap*2,),
-                      ThirdPartySignInSection(height: 100,),
-                      SizedBox(height: Constants.sapceGap*4,),
-          
+                      SizedBox(
+                        height: Constants.sapceGap * 2,
+                      ),
+                      ThirdPartySignInSection(
+                        height: 100,
+                      ),
+                      SizedBox(
+                        height: Constants.sapceGap * 4,
+                      ),
                     ],
                   ),
                 ),
@@ -127,4 +133,3 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 }
-

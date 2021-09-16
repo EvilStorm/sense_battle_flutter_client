@@ -7,7 +7,6 @@ import 'package:sense_battle/models/model_app_version.dart';
 import 'package:sense_battle/models/model_term.dart';
 
 class AppStartMergedDataModel {
-
   AppStartNotifyModel? notifies;
   List<AppVersionModel>? appVer;
   TermModel? term;
@@ -16,8 +15,6 @@ class AppStartMergedDataModel {
     this.appVer,
     this.term,
   });
-
-  
 
   AppStartMergedDataModel copyWith({
     AppStartNotifyModel? notifies,
@@ -43,7 +40,7 @@ class AppStartMergedDataModel {
     return AppStartMergedDataModel(
       notifies: AppStartNotifyModel.fromMap(map['notifies']),
       appVer: List<AppVersionModel>.from(map['appVer']?.map((x) => AppVersionModel.fromMap(x))),
-      term: (map['term'] != null) ?TermModel.fromMap(map['term']) :null,
+      term: (map['term'] != null) ? TermModel.fromMap(map['term']) : null,
     );
   }
 
@@ -57,13 +54,10 @@ class AppStartMergedDataModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is AppStartMergedDataModel &&
-      other.notifies == notifies &&
-      listEquals(other.appVer, appVer) &&
-      other.term == term;
+
+    return other is AppStartMergedDataModel && other.notifies == notifies && listEquals(other.appVer, appVer) && other.term == term;
   }
 
   @override
   int get hashCode => notifies.hashCode ^ appVer.hashCode ^ term.hashCode;
-} 
+}

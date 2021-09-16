@@ -15,16 +15,16 @@ class CircularProgress extends StatelessWidget {
             strokeWidth: 4,
             backgroundColor: Colors.white,
             valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).backgroundColor),
-            
           ),
-          SizedBox(height: 16.0,),
+          SizedBox(
+            height: 16.0,
+          ),
           Text(
             '잠시만 기다려주세요.',
             style: Theme.of(context).textTheme.bodyText1,
           )
         ],
       ),
-      
     );
   }
 }

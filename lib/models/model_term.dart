@@ -10,8 +10,6 @@ class TermModel {
     this.userTerm,
   });
 
-  
-
   TermModel copyWith({
     int? id,
     String? term,
@@ -50,11 +48,8 @@ class TermModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is TermModel &&
-      other.id == id &&
-      other.term == term &&
-      other.userTerm == userTerm;
+
+    return other is TermModel && other.id == id && other.term == term && other.userTerm == userTerm;
   }
 
   @override

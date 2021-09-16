@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sense_battle/constants/constants.dart';
 
 class ThridPartySignInButton extends StatelessWidget {
-
   final VoidCallback callback;
   final String svgImage;
   final Color? iconColor;
@@ -16,51 +15,45 @@ class ThridPartySignInButton extends StatelessWidget {
     required this.svgImage,
     this.iconColor,
     required this.title,
-    required this.callback, 
-    this.backgroundColor, 
+    required this.callback,
+    this.backgroundColor,
     this.textColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40.0),          
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40.0),
+          ),
+          primary: backgroundColor,
         ),
-        primary: backgroundColor,
-      ),
-      onPressed: () {
-        callback();
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(Constants.sapceGap/2),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              width: 30,
-              child: SvgPicture.asset(
-                svgImage,
-                width: 20,
-                height: 20,
-                color: iconColor,
+        onPressed: () {
+          callback();
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(Constants.sapceGap / 2),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: 30,
+                child: SvgPicture.asset(
+                  svgImage,
+                  width: 20,
+                  height: 20,
+                  color: iconColor,
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: Constants.sapceGap/2),
-              child: Text(
-                title, 
-                style: TextStyle(
-                  color: textColor??Colors.white, 
-                  fontSize: 18, 
-                  fontWeight: FontWeight.w500
-                  ),
-                )
-            ),
-          ],
-        ),
-      )
-    );
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: Constants.sapceGap / 2),
+                  child: Text(
+                    title,
+                    style: TextStyle(color: textColor ?? Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+                  )),
+            ],
+          ),
+        ));
   }
 }

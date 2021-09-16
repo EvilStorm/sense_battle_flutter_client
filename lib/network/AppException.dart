@@ -1,17 +1,16 @@
 class AppException implements Exception {
   final _message;
   final _prefix;
-  
-AppException([this._message, this._prefix]);
-  
-String toString() {
+
+  AppException([this._message, this._prefix]);
+
+  String toString() {
     return "$_prefix$_message";
   }
 }
 
 class FetchDataException extends AppException {
-  FetchDataException([String? message])
-      : super(message, "Error During Communication: ");
+  FetchDataException([String? message]) : super(message, "Error During Communication: ");
 }
 
 class NotNormalException extends AppException {
@@ -21,6 +20,7 @@ class NotNormalException extends AppException {
 class ServerException extends AppException {
   ServerException([message]) : super(message, "Server Exception: ");
 }
+
 class BadRequestException extends AppException {
   BadRequestException([message]) : super(message, "Invalid Request: ");
 }

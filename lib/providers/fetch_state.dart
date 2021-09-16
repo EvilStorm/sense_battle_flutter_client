@@ -1,3 +1,1 @@
-enum FetchState{
-  IDEL, PROGRESS, DONE, ERROR
-}
+enum FetchState { IDEL, PROGRESS, DONE, ERROR }

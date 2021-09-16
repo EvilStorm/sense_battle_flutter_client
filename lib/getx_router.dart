@@ -6,7 +6,6 @@ import 'package:sense_battle/screens/sign_in/screen_sign_in.dart';
 import 'package:sense_battle/screens/splash/screen_splash.dart';
 
 class GetXRouterContainer {
-
   final allPageRouter = [
     GetPage(name: '/', page: () => SplashScreen()),
     GetPage(name: '/splash', page: () => SplashScreen()),

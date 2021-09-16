@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sense_battle/models/model_app_version.dart';
 
 class AppUpdateWidget extends StatelessWidget {
-  
   final AppVersionModel data;
   final Function? callback;
 
@@ -17,7 +16,6 @@ class AppUpdateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).backgroundColor,
-      
     );
   }
 }

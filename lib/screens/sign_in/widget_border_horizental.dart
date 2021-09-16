@@ -8,28 +8,26 @@ class HorizentalBorder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Divider(
-            color: Colors.white,
-            height: 1.0,
-          ),
+    return Row(children: [
+      Expanded(
+        child: Divider(
+          color: Colors.white,
+          height: 1.0,
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap*2),
-          child: Text(
-            'OR',
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Constants.sapceGap * 2),
+        child: Text(
+          'OR',
+          style: Theme.of(context).textTheme.bodyText1,
         ),
-        Expanded(
-          child: Divider(
-            color: Colors.white,
-            height: 1.0,
-          ),
-        ),                            
-      ]
-    );
+      ),
+      Expanded(
+        child: Divider(
+          color: Colors.white,
+          height: 1.0,
+        ),
+      ),
+    ]);
   }
 }

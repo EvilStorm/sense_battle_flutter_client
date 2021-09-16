@@ -5,8 +5,8 @@ class TitleWithBack extends StatelessWidget {
   final String? title;
   final VoidCallback? callback;
   const TitleWithBack({
-    Key? key, 
-    this.title, 
+    Key? key,
+    this.title,
     this.callback,
   }) : super(key: key);
 
@@ -27,9 +27,11 @@ class TitleWithBack extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: Constants.sapceGap/2,),
+        SizedBox(
+          width: Constants.sapceGap / 2,
+        ),
         Text(
-          title??"",
+          title ?? "",
           style: Theme.of(context).textTheme.subtitle1,
         ),
       ],

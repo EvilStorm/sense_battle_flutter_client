@@ -16,8 +16,6 @@ class NotifyModel {
     required this.createdAt,
   });
 
-  
-
   NotifyModel copyWith({
     int? id,
     String? title,
@@ -70,23 +68,18 @@ class NotifyModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is NotifyModel &&
-      other.id == id &&
-      other.title == title &&
-      other.message == message &&
-      other.appStop == appStop &&
-      other.important == important &&
-      other.createdAt == createdAt;
+        other.id == id &&
+        other.title == title &&
+        other.message == message &&
+        other.appStop == appStop &&
+        other.important == important &&
+        other.createdAt == createdAt;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
-      title.hashCode ^
-      message.hashCode ^
-      appStop.hashCode ^
-      important.hashCode ^
-      createdAt.hashCode;
+    return id.hashCode ^ title.hashCode ^ message.hashCode ^ appStop.hashCode ^ important.hashCode ^ createdAt.hashCode;
   }
 }

@@ -9,8 +9,6 @@ class AppVersionModel {
     required this.message,
     required this.nessesary,
   });
- 
-  
 
   AppVersionModel copyWith({
     int? version,
@@ -50,11 +48,8 @@ class AppVersionModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is AppVersionModel &&
-      other.version == version &&
-      other.message == message &&
-      other.nessesary == nessesary;
+
+    return other is AppVersionModel && other.version == version && other.message == message && other.nessesary == nessesary;
   }
 
   @override

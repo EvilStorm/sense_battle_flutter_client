@@ -7,11 +7,11 @@ import 'package:sense_battle/network/AppException.dart';
 import 'package:sense_battle/network/LogginInterceptor.dart';
 import 'package:sense_battle/utils/Print.dart';
 
-enum API_CALL_STATE {NOT_CALLED, CALLED}
+enum API_CALL_STATE { NOT_CALLED, CALLED }
+
 class ApiHelper {
-  
   final pathPrefix = '/api';
-  final TEST_DOMAIN = "192.168.0.6:2394";
+  final TEST_DOMAIN = "192.168.19.11:2394";
   final LIVE_DOMAIN = "ec2-52-79-141-236.ap-northeast-2.compute.amazonaws.com:2394";
   final IS_LIVE = false;
 
@@ -25,7 +25,7 @@ class ApiHelper {
   }
 
   ApiHelper.init() {}
-   
+
   Map<String, String> header = {};
   void addHeader(key, value) {
     header[key] = value;
@@ -33,25 +33,21 @@ class ApiHelper {
 
   String getDomain() {
     Print.i('getDomain $IS_LIVE');
-    return IS_LIVE? LIVE_DOMAIN: TEST_DOMAIN;
+    return IS_LIVE ? LIVE_DOMAIN : TEST_DOMAIN;
   }
 
   Client http = InterceptedClient.build(interceptors: [
     LogginInterceptor(),
   ]);
 
-  Future<dynamic> get(String path,  {Map<String, dynamic> queryParams = const{}}) async {
+  Future<dynamic> get(String path, {Map<String, dynamic> queryParams = const {}}) async {
     try {
       final uri = Uri.http(getDomain(), "$pathPrefix/$path", queryParams);
 
-      final response = await http.get(
-        uri,
-        headers: header
-      );
+      final response = await http.get(uri, headers: header);
 
       return ResponseModel.fromMap(_returnResponse(response));
-
-    } on Exception catch(_) {
+    } on Exception catch (_) {
       Print.e(_);
       throw FetchDataException(_.toString());
     }
@@ -60,38 +56,29 @@ class ApiHelper {
   Future<dynamic> post(String path, {dynamic queryParams, dynamic body}) async {
     try {
       final uri = Uri.http(getDomain(), "$pathPrefix/$path", queryParams);
-      final response = await http.post(
-        uri,
-        headers: header,
-        body: body
-      );
+      final response = await http.post(uri, headers: header, body: body);
       return ResponseModel.fromMap(_returnResponse(response));
     } catch (e) {
       throw e;
     }
   }
-  Future<dynamic> patch(String path, {dynamic queryParams = const{}, dynamic body = const{}}) async {
+
+  Future<dynamic> patch(String path, {dynamic queryParams = const {}, dynamic body = const {}}) async {
     try {
       final uri = Uri.http(getDomain(), "$pathPrefix/$path", queryParams);
-      final response = await http.put(
-        uri,
-        headers: header,
-        body: body
-      );
+      final response = await http.put(uri, headers: header, body: body);
       return ResponseModel.fromMap(_returnResponse(response));
-    } on Exception  {
+    } on Exception {
       throw FetchDataException('No Internet connection');
     }
   }
+
   Future<dynamic> delete(String path) async {
     try {
       final uri = Uri.http(getDomain(), "$pathPrefix/$path");
-      final response = await http.delete(
-        uri,
-        headers: header
-      );
+      final response = await http.delete(uri, headers: header);
       return ResponseModel.fromMap(_returnResponse(response));
-    } on Exception  {
+    } on Exception {
       throw FetchDataException('No Internet connection');
     }
   }
@@ -108,8 +95,7 @@ class ApiHelper {
         throw UnauthorisedException(response.body.toString());
       case 500:
       default:
-        throw FetchDataException(
-            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        throw FetchDataException('Error occured while Communication with Server with StatusCode : ${response.statusCode}');
     }
   }
 }

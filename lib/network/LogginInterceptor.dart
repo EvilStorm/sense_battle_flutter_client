@@ -9,13 +9,14 @@ class LogginInterceptor implements InterceptorContract {
   String getTime() {
     return dateFormat.format(DateTime.now());
   }
+
   @override
   Future<RequestData> interceptRequest({required RequestData data}) async {
-    if(isShowLog) {
+    if (isShowLog) {
       Print.i("${getTime()} <<<<<<<<<<<<<<  Request  >>>>>>>>>>>>>>>>>>>>>>>");
       Print.api("${getTime()} Request Url: ${data.url}");
-      Print.api("${getTime()} Request header: ${data.headers}");    
-      Print.api("${getTime()} Request Body: ${data.body}");    
+      Print.api("${getTime()} Request header: ${data.headers}");
+      Print.api("${getTime()} Request Body: ${data.body}");
       Print.i("${getTime()} -------------------------------------- ");
     }
     return data;
@@ -23,7 +24,7 @@ class LogginInterceptor implements InterceptorContract {
 
   @override
   Future<ResponseData> interceptResponse({required ResponseData data}) async {
-    if(isShowLog) {
+    if (isShowLog) {
       Print.ii("${getTime()} >>>>>>>>>>>>>>>>>> Response <<<<<<<<<<<<<<<<<<<<<<<<");
       Print.api2("${getTime()} Response Url: (${data.statusCode}) ${data.url}");
       Print.api2("${getTime()} Response data: ${data.body.toString()}");
@@ -32,5 +33,4 @@ class LogginInterceptor implements InterceptorContract {
 
     return data;
   }
-
 }

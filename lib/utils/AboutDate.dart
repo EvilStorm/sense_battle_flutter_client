@@ -1,8 +1,6 @@
 import 'package:intl/intl.dart';
 
-
 class AboutDate {
-
   final dateFormat = new DateFormat('yyyy-MM-dd');
   final dateFormatMMdd = new DateFormat('yyyy\nMM/dd');
   final dateFormatMd = new DateFormat('MM/dd');

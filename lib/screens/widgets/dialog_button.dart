@@ -5,17 +5,15 @@ class DialogButton extends StatelessWidget {
   final ButtonPosition position;
   final String title;
   final VoidCallback? callback;
-  const DialogButton({
-    Key? key,
-    required this.position,
-    required this.title,
-    this.callback
-  }) : super(key: key);
-  
-  BoxDecoration getDialogDecoration(BuildContext context, ButtonPosition position,) {
+  const DialogButton({Key? key, required this.position, required this.title, this.callback}) : super(key: key);
+
+  BoxDecoration getDialogDecoration(
+    BuildContext context,
+    ButtonPosition position,
+  ) {
     late BoxDecoration btnStyle;
-    
-    switch(position) {
+
+    switch (position) {
       case ButtonPosition.Center:
         btnStyle = BoxDecoration(
           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0), bottomRight: Radius.circular(5.0)),
@@ -39,7 +37,6 @@ class DialogButton extends StatelessWidget {
           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0), bottomRight: Radius.circular(5.0)),
           color: Theme.of(context).accentColor,
         );
-
     }
     return btnStyle;
   }
@@ -54,14 +51,10 @@ class DialogButton extends StatelessWidget {
         child: Center(
           child: Text(
             title,
-            style: Theme.of(context).textTheme.button!.apply(
-              color: Colors.white
-            ),
+            style: Theme.of(context).textTheme.button!.apply(color: Colors.white),
           ),
         ),
       ),
     );
   }
 }
-
-  

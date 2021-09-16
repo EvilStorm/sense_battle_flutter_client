@@ -17,19 +17,17 @@ class ThirdPartySignInSection extends StatefulWidget {
 }
 
 class _ThirdPartySignInSectionState extends State<ThirdPartySignInSection> {
-  
   late SignInProvider signInProvider;
-  
+
   @override
   void initState() {
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     signInProvider = Provider.of<SignInProvider>(context);
-   
+
     return Container(
       height: widget.height,
       child: Row(
@@ -37,48 +35,48 @@ class _ThirdPartySignInSectionState extends State<ThirdPartySignInSection> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleButton(
-            callback: (){
+            callback: () {
               signInProvider.byGoogle();
             },
             child: SvgPicture.asset(
-                 "assets/images/google_logo.svg",
-                width: 45,
-                height: 45,
-              ),
+              "assets/images/google_logo.svg",
+              width: 45,
+              height: 45,
+            ),
           ),
           CircleButton(
-            callback: (){
+            callback: () {
               signInProvider.byFacebook();
             },
             backgroundColor: Color(0xFF4267B2),
             child: SvgPicture.asset(
-                 "assets/images/facebook_logo.svg",
-                width: 45,
-                height: 45,
-                color: Colors.white,
-              ),
+              "assets/images/facebook_logo.svg",
+              width: 45,
+              height: 45,
+              color: Colors.white,
+            ),
           ),
           CircleButton(
-            callback: (){
+            callback: () {
               signInProvider.byKakaoTalk();
-            },            
+            },
             backgroundColor: Color(0xFFFFE812),
             child: SvgPicture.asset(
-                 "assets/images/kakaotalk_logo.svg",
-                width: 45,
-                height: 45,
-              ),
+              "assets/images/kakaotalk_logo.svg",
+              width: 45,
+              height: 45,
+            ),
           ),
           CircleButton(
-            callback: (){
+            callback: () {
               signInProvider.byApple();
             },
             backgroundColor: Color(0xFF555555),
             child: SvgPicture.asset(
-                 "assets/images/apple_logo.svg",
-                width: 45,
-                height: 45,
-              ),
+              "assets/images/apple_logo.svg",
+              width: 45,
+              height: 45,
+            ),
           ),
         ],
       ),

@@ -14,7 +14,6 @@ import 'package:sense_battle/network/ApiHelper.dart';
 import 'package:sense_battle/utils/Print.dart';
 
 class SplashProvider with ChangeNotifier, DiagnosticableTreeMixin {
-
   AppStartNotifyModel? notifies;
   TermModel? term;
   AppVersionModel? appVersion;
@@ -24,21 +23,18 @@ class SplashProvider with ChangeNotifier, DiagnosticableTreeMixin {
   bool readyToStart = false;
   var storage = GetStorage();
 
-
   SplashProvider() {
     getAppStartData();
   }
-
 
   void getAppStartData() async {
     Print.e('getAppStartData Called');
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-    int appVer = storage.read(KeyStore.appVer_I)??int.parse(packageInfo.buildNumber);
-    int notifySeq = storage.read(KeyStore.notifySeq_I)??0;
-    int termSeq = storage.read(KeyStore.termSeq_I)??0;
-
+    int appVer = storage.read(KeyStore.appVer_I) ?? int.parse(packageInfo.buildNumber);
+    int notifySeq = storage.read(KeyStore.notifySeq_I) ?? 0;
+    int termSeq = storage.read(KeyStore.termSeq_I) ?? 0;
 
     try {
       ResponseModel response = await ApiHelper().get('appStart/notify/$notifySeq/appVer/$appVer/term/$termSeq');
@@ -46,34 +42,33 @@ class SplashProvider with ChangeNotifier, DiagnosticableTreeMixin {
       AppStartMergedDataModel model = AppStartMergedDataModel.fromMap(response.data);
 
       readyForStart(model);
-
     } catch (e) {
       Print.e(e);
     }
   }
 
   void readyForStart(AppStartMergedDataModel model) {
-    if(model.notifies?.normalNotifies == null || (model.notifies?.normalNotifies?.isEmpty) == true) {
+    if (model.notifies?.normalNotifies == null || (model.notifies?.normalNotifies?.isEmpty) == true) {
       readyForStartFlag[0] = true;
     } else {
       notifies = model.notifies;
     }
-    if( (model.appVer?.isEmpty) == true) {
+    if ((model.appVer?.isEmpty) == true) {
       readyForStartFlag[1] = true;
     } else {
       appVersion = model.appVer!.elementAt(0);
     }
-    if(model.term == null) {
+    if (model.term == null) {
       readyForStartFlag[2] = true;
     } else {
       term = model.term;
     }
 
-    if(!readyForStartFlag.contains(false)) {
+    if (!readyForStartFlag.contains(false)) {
       moveNext();
       return;
-    }     
-  
+    }
+
     notifyListeners();
   }
 
@@ -89,7 +84,6 @@ class SplashProvider with ChangeNotifier, DiagnosticableTreeMixin {
     readyForStartFlag[1] = true;
     appVersion = null;
     moveNext();
-
   }
 
   void checkTerm() {
@@ -100,15 +94,11 @@ class SplashProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   void moveNext() {
-    
-    if(!readyForStartFlag.contains(false)) {
-      FirebaseAuth.instance.authStateChanges().listen((event) { 
-        if(event == null) {
+    if (!readyForStartFlag.contains(false)) {
+      FirebaseAuth.instance.authStateChanges().listen((event) {
+        if (event == null) {
           Get.offAndToNamed('/signin');
-        }else if (
-          event.emailVerified == false 
-          && event.providerData.elementAt(0).providerId == "password"
-        ) {
+        } else if (event.emailVerified == false && event.providerData.elementAt(0).providerId == "password") {
           Get.offAndToNamed('/emailVaildation');
         } else {
           Get.offAndToNamed('/main');

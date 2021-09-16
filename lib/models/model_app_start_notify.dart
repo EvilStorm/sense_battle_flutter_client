@@ -11,8 +11,6 @@ class AppStartNotifyModel {
     this.appStopNotify,
     this.normalNotifies,
   });
-  
-  
 
   AppStartNotifyModel copyWith({
     NotifyModel? appStopNotify,
@@ -33,7 +31,7 @@ class AppStartNotifyModel {
 
   factory AppStartNotifyModel.fromMap(Map<String, dynamic> map) {
     return AppStartNotifyModel(
-      appStopNotify: map['appStopNotify']!=null ?NotifyModel.fromMap(map['appStopNotify']) :null,
+      appStopNotify: map['appStopNotify'] != null ? NotifyModel.fromMap(map['appStopNotify']) : null,
       normalNotifies: List<NotifyModel>.from(map['normalNotifies']?.map((x) => NotifyModel.fromMap(x))),
     );
   }
@@ -48,10 +46,8 @@ class AppStartNotifyModel {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
-    return other is AppStartNotifyModel &&
-      other.appStopNotify == appStopNotify &&
-      listEquals(other.normalNotifies, normalNotifies);
+
+    return other is AppStartNotifyModel && other.appStopNotify == appStopNotify && listEquals(other.normalNotifies, normalNotifies);
   }
 
   @override

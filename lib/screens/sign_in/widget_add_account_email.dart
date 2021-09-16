@@ -6,7 +6,6 @@ import 'package:sense_battle/providers/provider_signin.dart';
 import 'package:sense_battle/constants/constants.dart';
 
 class AddAccountWithEmail extends StatefulWidget {
-
   AddAccountWithEmail({
     Key? key,
   }) : super(key: key);
@@ -16,18 +15,17 @@ class AddAccountWithEmail extends StatefulWidget {
 }
 
 class _AddAccountWithEmailState extends State<AddAccountWithEmail> {
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordCheckController = TextEditingController();
   late SignInProvider signInProvider;
   bool _passwordVaildation = false;
-  
+
   @override
   void initState() {
-    passwordController.addListener(() { 
+    passwordController.addListener(() {
       bool isTrue = isPasswodVaildate();
-      if(_passwordVaildation != isTrue ) {
+      if (_passwordVaildation != isTrue) {
         setState(() {
           _passwordVaildation = isTrue;
         });
@@ -50,8 +48,7 @@ class _AddAccountWithEmailState extends State<AddAccountWithEmail> {
       return false;
     }
 
-    if (passwordCheckController.text == "" 
-        || passwordController.text != passwordCheckController.text) {
+    if (passwordCheckController.text == "" || passwordController.text != passwordCheckController.text) {
       signInProvider.setErrorMessage('비밀번호 확인을 확인해주세요.');
       return false;
     }
@@ -66,7 +63,9 @@ class _AddAccountWithEmailState extends State<AddAccountWithEmail> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Spacer(flex: 1,),
+        Spacer(
+          flex: 1,
+        ),
         TextField(
           controller: emailController,
           keyboardType: TextInputType.emailAddress,
@@ -75,7 +74,9 @@ class _AddAccountWithEmailState extends State<AddAccountWithEmail> {
             labelText: '이메일',
           ),
         ),
-        Spacer(flex: 1,),
+        Spacer(
+          flex: 1,
+        ),
         TextField(
           controller: passwordController,
           obscureText: true,
@@ -87,7 +88,12 @@ class _AddAccountWithEmailState extends State<AddAccountWithEmail> {
         Visibility(
           visible: !_passwordVaildation,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, Constants.sapceGap, 0.0, 0.0,),
+            padding: const EdgeInsets.fromLTRB(
+              0.0,
+              Constants.sapceGap,
+              0.0,
+              0.0,
+            ),
             child: Container(
               child: Row(
                 children: [
@@ -96,7 +102,9 @@ class _AddAccountWithEmailState extends State<AddAccountWithEmail> {
                     size: 28,
                     color: Theme.of(context).errorColor,
                   ),
-                  SizedBox(width: Constants.sapceGap/2,),
+                  SizedBox(
+                    width: Constants.sapceGap / 2,
+                  ),
                   Text(
                     '8자리 이상의 비밀번호를 입력해주세요.',
                     style: Theme.of(context).textTheme.bodyText1,
@@ -106,7 +114,9 @@ class _AddAccountWithEmailState extends State<AddAccountWithEmail> {
             ),
           ),
         ),
-        Spacer(flex: 1,),
+        Spacer(
+          flex: 1,
+        ),
         TextField(
           controller: passwordCheckController,
           obscureText: true,
@@ -115,23 +125,26 @@ class _AddAccountWithEmailState extends State<AddAccountWithEmail> {
             labelText: '비밀번호 확인',
           ),
         ),
-        Spacer(flex: 2,),
+        Spacer(
+          flex: 2,
+        ),
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
             onPressed: () {
-              if(!checkInputVaildation()) {
+              if (!checkInputVaildation()) {
                 return;
               }
-              signInProvider.addAccountWithEmail(
-                  emailController.text, passwordController.text);
+              signInProvider.addAccountWithEmail(emailController.text, passwordController.text);
             },
             child: Text(
               '회원가입',
             ),
           ),
         ),
-        Spacer(flex: 1,),
+        Spacer(
+          flex: 1,
+        ),
       ],
     );
   }
