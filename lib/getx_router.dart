@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:sense_battle/screens/email_validation/email_validation_screen.dart';
-import 'package:sense_battle/screens/main/main_screen.dart';
+import 'package:sense_battle/screens/email_validation/screen_email_validation.dart';
+import 'package:sense_battle/screens/main/screen_main.dart';
 import 'package:sense_battle/screens/sign_in/screen_join_us.dart';
 import 'package:sense_battle/screens/sign_in/screen_sign_in.dart';
 import 'package:sense_battle/screens/splash/screen_splash.dart';

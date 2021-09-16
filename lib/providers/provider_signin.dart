@@ -39,7 +39,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
     try {
       _userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
-      _userInfo = await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.InApp);
+      await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.InApp);
 
       Print.i("signinWithEmail: ${_userCredential.toString()}");
     } on FirebaseAuthException catch (e) {
@@ -68,7 +68,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
     try {
       _userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
 
-      _userInfo = await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.InApp);
+      await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.InApp);
 
       Print.i(_userCredential.toString());
     } on FirebaseAuthException catch (e) {
@@ -101,7 +101,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
         _userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
 
-        _userInfo = await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.Google);
+        await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.Google);
       }
     } catch (e) {
       Print.e(e);
@@ -117,7 +117,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       final facebookAuthCredential = FacebookAuthProvider.credential(result.accessToken!.token);
 
       _userCredential = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-      _userInfo = await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.FaceBook);
+      await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.FaceBook);
     } catch (e) {
       Print.e(e);
       // _errMsg = e.toString();
@@ -136,7 +136,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       var response = await http.post(Uri.parse("http://127.0.0.1:2394/api/auth/callbacks/kakao/token"), body: {"accessToken": token.accessToken});
 
       _userCredential = await FirebaseAuth.instance.signInWithCustomToken(response.body);
-      _userInfo = await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.Kakao);
+      await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.Kakao);
 
       Print.e("Token :$_userCredential");
     } catch (e) {
@@ -178,7 +178,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
           OAuthProvider("apple.com").credential(idToken: appleCredential.identityToken, accessToken: appleCredential.authorizationCode);
 
       _userCredential = await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
-      _userInfo = await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.Apple);
+      await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.Apple);
     } catch (e) {
       Print.e(e);
     } finally {
@@ -186,7 +186,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  Future<UserInfoModel> getUserInfo(String? uId, String? email, SignInType signInType) async {
+  Future<void> getUserInfo(String? uId, String? email, SignInType signInType) async {
     if (uId == null) throw UnauthorisedException('회원정보가 부족하여 가입이 취소되었습니다.');
 
     var bodyParam = {'identifyId': uId, 'joinType': signInType.index.toString()};
@@ -196,8 +196,9 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
     }
 
     final response = await ApiHelper.instance.post('user', body: bodyParam);
+    _userInfo = UserInfoModel.fromMap(response['data']);
 
-    return UserInfoModel.fromMap(response['data']);
+    return;
   }
 
   void signInOut() async {

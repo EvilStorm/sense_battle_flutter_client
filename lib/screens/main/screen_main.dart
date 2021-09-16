@@ -16,6 +16,16 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedMenuIndex = 0;
 
+  late SignInProvider signInProvider;
+
+  @override
+  void initState() {
+    if (signInProvider.userCredential != null && signInProvider.userInfo == null) {
+      //TODO 로그인 추가해야됨.
+    }
+    super.initState();
+  }
+
   void _menuSelected(var index) {
     setState(() {
       _selectedMenuIndex = index;
@@ -26,7 +36,9 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SignInProvider signInProvider = Provider.of<SignInProvider>(context);
+    signInProvider = Provider.of<SignInProvider>(context);
+
+    Print.e("main screen signInProvider: ${signInProvider.userInfo.toString()}");
 
     return Scaffold(
       body: SafeArea(

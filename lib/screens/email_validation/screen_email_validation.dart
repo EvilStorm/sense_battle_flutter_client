@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/constants.dart';
 import 'package:sense_battle/providers/provider_signin.dart';
-import 'package:sense_battle/screens/main/main_screen.dart';
+import 'package:sense_battle/screens/main/screen_main.dart';
 import 'package:sense_battle/screens/sign_in/screen_sign_in.dart';
 import 'package:sense_battle/utils/Print.dart';
 
