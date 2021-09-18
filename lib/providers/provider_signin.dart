@@ -1,8 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk/auth.dart';
+import 'package:sense_battle/constants/key_store.dart';
+import 'package:sense_battle/models/model_response.dart';
 import 'package:sense_battle/models/model_user_info.dart';
 import 'package:sense_battle/models/password_level_model.dart';
 import 'package:sense_battle/network/ApiHelper.dart';
@@ -28,9 +32,31 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
   FetchState _fetchState = FetchState.IDEL;
   FetchState get fetchState => _fetchState;
 
+  GetStorage localStorage = GetStorage();
+  
   void setErrorMessage(String? message) {
     this._errMsg = message;
     notifyListeners();
+  }
+
+  void autoSignIn() async {
+      FirebaseAuth.instance.authStateChanges().listen((event) {
+
+        Print.e(event);
+
+        if (event == null) {
+          Get.offAndToNamed('/signin');
+        } else if (event.emailVerified == false && event.providerData.elementAt(0).providerId == "password") {
+          Get.offAndToNamed('/emailVaildation');
+        } else {
+
+          var signInType = localStorage.read(KeyStore.signInType_S)??SignInType.InApp;
+
+          getUserInfo(event.uid, event.email, signInType)
+          .then((value) => Get.offAndToNamed('/main'))
+          .catchError((e) => Print.e(e));
+        }
+      });
   }
 
   void signinWithEmail(String email, String password) async {
@@ -40,6 +66,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       _userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
       await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.InApp);
+      localStorage.write(KeyStore.signInType_S, SignInType.InApp);
 
       Print.i("signinWithEmail: ${_userCredential.toString()}");
     } on FirebaseAuthException catch (e) {
@@ -69,6 +96,8 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       _userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
 
       await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.InApp);
+      
+      localStorage.write(KeyStore.signInType_S, SignInType.InApp);
 
       Print.i(_userCredential.toString());
     } on FirebaseAuthException catch (e) {
@@ -102,6 +131,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
         _userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
 
         await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.Google);
+        localStorage.write(KeyStore.signInType_S, SignInType.Google);
       }
     } catch (e) {
       Print.e(e);
@@ -118,6 +148,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
       _userCredential = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
       await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.FaceBook);
+      localStorage.write(KeyStore.signInType_S, SignInType.FaceBook);
     } catch (e) {
       Print.e(e);
       // _errMsg = e.toString();
@@ -137,6 +168,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
       _userCredential = await FirebaseAuth.instance.signInWithCustomToken(response.body);
       await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.Kakao);
+      localStorage.write(KeyStore.signInType_S, SignInType.Kakao);
 
       Print.e("Token :$_userCredential");
     } catch (e) {
@@ -179,6 +211,7 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
       _userCredential = await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
       await getUserInfo(_userCredential?.user?.uid, _userCredential?.user?.email, SignInType.Apple);
+      localStorage.write(KeyStore.signInType_S, SignInType.Apple);
     } catch (e) {
       Print.e(e);
     } finally {
@@ -195,8 +228,8 @@ class SignInProvider with ChangeNotifier, DiagnosticableTreeMixin {
       bodyParam['email'] = email;
     }
 
-    final response = await ApiHelper.instance.post('user', body: bodyParam);
-    _userInfo = UserInfoModel.fromMap(response['data']);
+    ResponseModel response = await ApiHelper().post('user', body: bodyParam);
+    _userInfo = UserInfoModel.fromMap(response.data);
 
     return;
   }

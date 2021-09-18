@@ -20,9 +20,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    if (signInProvider.userCredential != null && signInProvider.userInfo == null) {
-      //TODO 로그인 추가해야됨.
-    }
+
     super.initState();
   }
 

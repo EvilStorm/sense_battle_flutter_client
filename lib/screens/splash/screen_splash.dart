@@ -6,6 +6,7 @@ import 'package:kakao_flutter_sdk/all.dart';
 import 'package:provider/provider.dart';
 import 'package:sense_battle/constants/constants.dart';
 import 'package:sense_battle/models/model_app_version.dart';
+import 'package:sense_battle/providers/provider_signin.dart';
 import 'package:sense_battle/providers/provider_splash.dart';
 import 'package:sense_battle/screens/splash/widget/widget_notify.dart';
 import 'package:sense_battle/screens/splash/widget/widget_term.dart';
@@ -81,6 +82,12 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
 
+    if(provider.readyToStart) {
+      var signInProvider = Provider.of<SignInProvider>(context);
+      signInProvider.autoSignIn();
+    }
+
+
     Print.e('Splash Build... Provider NotifyS: ${provider.notifies?.normalNotifies?.length}');
     return Scaffold(
       body: SafeArea(
@@ -117,6 +124,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
             ],
+            
           ),
         ),
       ),

@@ -45,7 +45,8 @@ class MyApp extends StatelessWidget {
                 create: (_) => SplashProvider(),
                 lazy: false,
               ),
-              ChangeNotifierProvider(create: (_) => SignInProvider()),
+              ChangeNotifierProvider(create: (_) => SignInProvider(),),
+              
             ],
             child: GetMaterialApp(
               title: 'Sense Battle',

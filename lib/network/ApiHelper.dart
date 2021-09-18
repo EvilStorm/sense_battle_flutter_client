@@ -11,7 +11,7 @@ enum API_CALL_STATE { NOT_CALLED, CALLED }
 
 class ApiHelper {
   final pathPrefix = '/api';
-  final TEST_DOMAIN = "192.168.19.11:2394";
+  final TEST_DOMAIN = "192.168.0.6:2394";
   final LIVE_DOMAIN = "ec2-52-79-141-236.ap-northeast-2.compute.amazonaws.com:2394";
   final IS_LIVE = false;
 
@@ -40,7 +40,7 @@ class ApiHelper {
     LogginInterceptor(),
   ]);
 
-  Future<dynamic> get(String path, {Map<String, dynamic> queryParams = const {}}) async {
+  Future<ResponseModel> get(String path, {Map<String, dynamic> queryParams = const {}}) async {
     try {
       final uri = Uri.http(getDomain(), "$pathPrefix/$path", queryParams);
 
@@ -53,7 +53,7 @@ class ApiHelper {
     }
   }
 
-  Future<dynamic> post(String path, {dynamic queryParams, dynamic body}) async {
+  Future<ResponseModel> post(String path, {dynamic queryParams, dynamic body}) async {
     try {
       final uri = Uri.http(getDomain(), "$pathPrefix/$path", queryParams);
       final response = await http.post(uri, headers: header, body: body);
@@ -63,7 +63,7 @@ class ApiHelper {
     }
   }
 
-  Future<dynamic> patch(String path, {dynamic queryParams = const {}, dynamic body = const {}}) async {
+  Future<ResponseModel> patch(String path, {dynamic queryParams = const {}, dynamic body = const {}}) async {
     try {
       final uri = Uri.http(getDomain(), "$pathPrefix/$path", queryParams);
       final response = await http.put(uri, headers: header, body: body);
@@ -73,7 +73,7 @@ class ApiHelper {
     }
   }
 
-  Future<dynamic> delete(String path) async {
+  Future<ResponseModel> delete(String path) async {
     try {
       final uri = Uri.http(getDomain(), "$pathPrefix/$path");
       final response = await http.delete(uri, headers: header);

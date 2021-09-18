@@ -94,17 +94,20 @@ class SplashProvider with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   void moveNext() {
-    if (!readyForStartFlag.contains(false)) {
-      FirebaseAuth.instance.authStateChanges().listen((event) {
-        if (event == null) {
-          Get.offAndToNamed('/signin');
-        } else if (event.emailVerified == false && event.providerData.elementAt(0).providerId == "password") {
-          Get.offAndToNamed('/emailVaildation');
-        } else {
-          Get.offAndToNamed('/main');
-        }
-      });
-    }
+    readyToStart = true;
+
+    // if (!readyForStartFlag.contains(false)) {
+    //   FirebaseAuth.instance.authStateChanges().listen((event) {
+    //     if (event == null) {
+    //       Get.offAndToNamed('/signin');
+    //     } else if (event.emailVerified == false && event.providerData.elementAt(0).providerId == "password") {
+    //       Get.offAndToNamed('/emailVaildation');
+    //     } else {
+          
+    //       Get.offAndToNamed('/main');
+    //     }
+    //   });
+    // }
 
     notifyListeners();
   }
